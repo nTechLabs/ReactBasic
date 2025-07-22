@@ -1,0 +1,142 @@
+import { Card, Button, Space, Typography, Row, Col } from 'antd'
+import { useNavigate } from 'react-router-dom'
+import { 
+  HomeOutlined, 
+  UnorderedListOutlined, 
+  InfoCircleOutlined,
+  RocketOutlined,
+  ArrowRightOutlined,
+  ApiOutlined
+} from '@ant-design/icons'
+
+const { Title, Paragraph } = Typography
+
+const IndexPage = () => {
+  const navigate = useNavigate()
+
+  const pages = [
+    {
+      key: 'counter',
+      title: '카운터 페이지',
+      description: 'Zustand를 사용한 상태 관리 예제',
+      path: '/counter',
+      icon: <HomeOutlined />,
+      color: '#1890ff'
+    },
+    {
+      key: 'todos',
+      title: '할 일 목록',
+      description: 'React Query를 사용한 데이터 페칭 예제',
+      path: '/todos',
+      icon: <UnorderedListOutlined />,
+      color: '#52c41a'
+    },
+    {
+      key: 'hooks',
+      title: 'React Hooks',
+      description: 'React Hooks 사용법과 예제 모음',
+      path: '/hooks',
+      icon: <ApiOutlined />,
+      color: '#fa8c16'
+    },
+    {
+      key: 'about',
+      title: '프로젝트 소개',
+      description: '기술 스택 및 프로젝트 정보',
+      path: '/about',
+      icon: <InfoCircleOutlined />,
+      color: '#722ed1'
+    }
+  ]
+
+  const handleNavigate = (path) => {
+    navigate(path)
+  }
+
+  return (
+    <Space direction="vertical" size="large" style={{ width: '100%' }}>
+      <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+        <Title level={1}>
+          <RocketOutlined style={{ color: '#1890ff' }} /> 
+          React 프로젝트 대시보드
+        </Title>
+        <Paragraph style={{ fontSize: '16px', color: '#666' }}>
+          각 페이지로 이동하여 다양한 기능을 탐색해보세요
+        </Paragraph>
+      </div>
+
+      <Row gutter={[24, 24]}>
+        {pages.map((page) => (
+          <Col xs={24} sm={12} lg={6} key={page.key}>
+            <Card
+              hoverable
+              style={{ 
+                height: '200px',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center'
+              }}
+              bodyStyle={{ 
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: '100%',
+                textAlign: 'center'
+              }}
+            >
+              <Space direction="vertical" size="middle" align="center">
+                <div style={{ fontSize: '48px', color: page.color }}>
+                  {page.icon}
+                </div>
+                <Title level={4} style={{ margin: 0 }}>
+                  {page.title}
+                </Title>
+                <Paragraph style={{ margin: 0, color: '#666' }}>
+                  {page.description}
+                </Paragraph>
+                <Button 
+                  type="primary" 
+                  size="large"
+                  icon={<ArrowRightOutlined />}
+                  onClick={() => handleNavigate(page.path)}
+                  style={{ backgroundColor: page.color, borderColor: page.color }}
+                >
+                  이동하기
+                </Button>
+              </Space>
+            </Card>
+          </Col>
+        ))}
+      </Row>
+
+      <Card style={{ marginTop: '32px', backgroundColor: '#f6f6f6' }}>
+        <Title level={3} style={{ textAlign: 'center', marginBottom: '16px' }}>
+          기술 스택
+        </Title>
+        <Row gutter={[16, 16]} justify="center">
+          <Col>
+            <Button type="default" size="small">React 19.1.0</Button>
+          </Col>
+          <Col>
+            <Button type="default" size="small">Vite</Button>
+          </Col>
+          <Col>
+            <Button type="default" size="small">Ant Design</Button>
+          </Col>
+          <Col>
+            <Button type="default" size="small">React Query</Button>
+          </Col>
+          <Col>
+            <Button type="default" size="small">Zustand</Button>
+          </Col>
+          <Col>
+            <Button type="default" size="small">React Router</Button>
+          </Col>
+        </Row>
+      </Card>
+    </Space>
+  )
+}
+
+export default IndexPage
