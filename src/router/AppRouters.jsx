@@ -97,7 +97,7 @@ const AppLayout = ({ children }) => {
         <NavigationMenu />
       </Header>
       
-      <Content style={{ padding: '24px', maxWidth: '1200px', margin: '0 auto', width: '100%' }}>
+      <Content style={{ padding: '24px' }}>
         {children}
       </Content>
 
