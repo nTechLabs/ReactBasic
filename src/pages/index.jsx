@@ -6,7 +6,13 @@ import {
   InfoCircleOutlined,
   RocketOutlined,
   ArrowRightOutlined,
-  ApiOutlined
+  ApiOutlined,
+  FireOutlined,
+  ThunderboltOutlined,
+  BgColorsOutlined,
+  DatabaseOutlined,
+  GlobalOutlined,
+  ShareAltOutlined
 } from '@ant-design/icons'
 
 const { Title, Paragraph } = Typography
@@ -116,22 +122,100 @@ const IndexPage = () => {
         </Title>
         <Row gutter={[16, 16]} justify="center">
           <Col>
-            <Button type="default" size="small">React 19.1.0</Button>
+            <Button 
+              type="default" 
+              size="large"
+              icon={<ApiOutlined style={{ color: '#61DAFB', fontSize: '18px' }} />}
+              onClick={() => window.open('https://react.dev/', '_blank')}
+              style={{ 
+                cursor: 'pointer',
+                height: '48px',
+                fontSize: '16px',
+                padding: '0 20px'
+              }}
+            >
+              React 19.1.0
+            </Button>
           </Col>
           <Col>
-            <Button type="default" size="small">Vite</Button>
+            <Button 
+              type="default" 
+              size="large"
+              icon={<ThunderboltOutlined style={{ color: '#646CFF', fontSize: '18px' }} />}
+              onClick={() => window.open('https://vitejs.dev/', '_blank')}
+              style={{ 
+                cursor: 'pointer',
+                height: '48px',
+                fontSize: '16px',
+                padding: '0 20px'
+              }}
+            >
+              Vite
+            </Button>
           </Col>
           <Col>
-            <Button type="default" size="small">Ant Design</Button>
+            <Button 
+              type="default" 
+              size="large"
+              icon={<BgColorsOutlined style={{ color: '#1890ff', fontSize: '18px' }} />}
+              onClick={() => window.open('https://ant.design/', '_blank')}
+              style={{ 
+                cursor: 'pointer',
+                height: '48px',
+                fontSize: '16px',
+                padding: '0 20px'
+              }}
+            >
+              Ant Design
+            </Button>
           </Col>
           <Col>
-            <Button type="default" size="small">React Query</Button>
+            <Button 
+              type="default" 
+              size="large"
+              icon={<DatabaseOutlined style={{ color: '#FF4154', fontSize: '18px' }} />}
+              onClick={() => window.open('https://tanstack.com/query/latest', '_blank')}
+              style={{ 
+                cursor: 'pointer',
+                height: '48px',
+                fontSize: '16px',
+                padding: '0 20px'
+              }}
+            >
+              React Query
+            </Button>
           </Col>
           <Col>
-            <Button type="default" size="small">Zustand</Button>
+            <Button 
+              type="default" 
+              size="large"
+              icon={<GlobalOutlined style={{ color: '#2D3748', fontSize: '18px' }} />}
+              onClick={() => window.open('https://zustand.docs.pmnd.rs/', '_blank')}
+              style={{ 
+                cursor: 'pointer',
+                height: '48px',
+                fontSize: '16px',
+                padding: '0 20px'
+              }}
+            >
+              Zustand
+            </Button>
           </Col>
           <Col>
-            <Button type="default" size="small">React Router</Button>
+            <Button 
+              type="default" 
+              size="large"
+              icon={<ShareAltOutlined style={{ color: '#CA4245', fontSize: '18px' }} />}
+              onClick={() => window.open('https://reactrouter.com/', '_blank')}
+              style={{ 
+                cursor: 'pointer',
+                height: '48px',
+                fontSize: '16px',
+                padding: '0 20px'
+              }}
+            >
+              React Router
+            </Button>
           </Col>
         </Row>
       </Card>
