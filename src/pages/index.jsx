@@ -1,7 +1,5 @@
-import { Card, Button, Space, Typography, Row, Col, Divider } from 'antd'
+import { Card, Button, Space, Typography, Row, Col } from 'antd'
 import { useNavigate } from 'react-router-dom'
-import { usePageStore } from '../store/pageStore'
-import PageStatsComponent from '../components/PageStatsComponent'
 import { 
   HomeOutlined, 
   UnorderedListOutlined, 
@@ -14,15 +12,13 @@ import {
   BgColorsOutlined,
   DatabaseOutlined,
   GlobalOutlined,
-  ShareAltOutlined,
-  BarChartOutlined
+  ShareAltOutlined
 } from '@ant-design/icons'
 
 const { Title, Paragraph } = Typography
 
 const IndexPage = () => {
   const navigate = useNavigate()
-  const { addNotification, currentPage } = usePageStore()
 
   const pages = [
     {
@@ -60,12 +56,6 @@ const IndexPage = () => {
   ]
 
   const handleNavigate = (path) => {
-    // 알림 추가
-    addNotification({
-      type: 'info',
-      message: '페이지 이동',
-      description: `${path} 페이지로 이동합니다.`
-    })
     navigate(path)
   }
 
@@ -228,19 +218,6 @@ const IndexPage = () => {
             </Button>
           </Col>
         </Row>
-      </Card>
-
-      {/* 페이지 상태 관리 정보 섹션 */}
-      <Card 
-        style={{ marginTop: '32px' }}
-        title={
-          <Space>
-            <BarChartOutlined style={{ color: '#1890ff' }} />
-            페이지 상태 관리 및 통계 (Zustand)
-          </Space>
-        }
-      >
-        <PageStatsComponent />
       </Card>
     </Space>
   )
