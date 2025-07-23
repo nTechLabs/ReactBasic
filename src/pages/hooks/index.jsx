@@ -68,6 +68,15 @@ const HooksIndexPage = () => {
       examples: ['폼 상태 관리', '유효성 검사', '회원가입 폼', '동적 폼 생성', '실시간 검증', '에러 처리', '폼 제출 관리']
     },
     {
+      key: 'useRef',
+      title: 'useRef Hook',
+      description: 'DOM 접근과 값 저장을 위한 React Hook',
+      path: '/hooks/useRef',
+      icon: <FunctionOutlined />,
+      color: '#fa541c',
+      examples: ['DOM 요소 접근', '이전 값 저장', '타이머 관리', '스크롤 추적', 'Focus 제어', '렌더링 최적화', '값 참조 유지']
+    },
+    {
       key: 'useLocalStorage',
       title: 'useLocalStorage Hook',
       description: '로컬스토리지를 활용한 데이터 저장과 관리를 위한 커스텀 React Hook',
@@ -249,6 +258,12 @@ const HooksIndexPage = () => {
             <div style={{ textAlign: 'center', padding: '8px' }}>
               <CodeOutlined style={{ fontSize: '24px', color: '#722ed1' }} />
               <div style={{ fontSize: '12px', marginTop: '4px' }}>useForm</div>
+            </div>
+          </Col>
+          <Col xs={12} sm={8} md={6} lg={4}>
+            <div style={{ textAlign: 'center', padding: '8px' }}>
+              <FunctionOutlined style={{ fontSize: '24px', color: '#fa541c' }} />
+              <div style={{ fontSize: '12px', marginTop: '4px' }}>useRef</div>
             </div>
           </Col>
           <Col xs={12} sm={8} md={6} lg={4}>

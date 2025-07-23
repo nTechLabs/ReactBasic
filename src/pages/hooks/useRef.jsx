@@ -13,7 +13,7 @@ import {
   CameraOutlined,
   ClockCircleOutlined,
   SettingOutlined,
-  FocusOutlined
+  SelectOutlined
 } from '@ant-design/icons'
 
 // Typography 컴포넌트들을 구조 분해 할당으로 추출
@@ -73,7 +73,7 @@ const DOMAccessDemo = () => {
                 <Space wrap>
                   <Button 
                     onClick={focusInput}
-                    icon={<FocusOutlined />}
+                    icon={<SelectOutlined />}
                     type="primary"
                     size="small"
                   >
@@ -107,7 +107,7 @@ const DOMAccessDemo = () => {
                 <Space wrap>
                   <Button 
                     onClick={focusTextarea}
-                    icon={<FocusOutlined />}
+                    icon={<SelectOutlined />}
                     type="primary"
                     size="small"
                   >

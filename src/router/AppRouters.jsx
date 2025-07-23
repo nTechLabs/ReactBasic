@@ -13,6 +13,7 @@ import UseContextPage from '../pages/hooks/useContext'
 import UseCallbackPage from '../pages/hooks/useCallback'
 import UseMemoPage from '../pages/hooks/useMemo'
 import UseFormPage from '../pages/hooks/useForm'
+import UseRefPage from '../pages/hooks/useRef'
 import UseLocalStoragePage from '../pages/hooks/useLocalStorage'
 
 const { Header, Content, Footer } = Layout
@@ -104,6 +105,7 @@ const AppRouters = () => {
           <Route path="/hooks/useCallback" element={<UseCallbackPage />} />
           <Route path="/hooks/useMemo" element={<UseMemoPage />} />
           <Route path="/hooks/useForm" element={<UseFormPage />} />
+          <Route path="/hooks/useRef" element={<UseRefPage />} />
           <Route path="/hooks/useLocalStorage" element={<UseLocalStoragePage />} />
           <Route path="/about" element={<AboutPage />} />
         </Routes>
