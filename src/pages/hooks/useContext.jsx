@@ -20,6 +20,107 @@ const { Title, Paragraph, Text } = Typography
 const { Option } = Select
 
 // =====================================
+// 📋 useContext 기본 개념
+// =====================================
+const UseContextConceptCard = () => {
+  return (
+    <Card 
+      title="📋 useContext 기본 개념" 
+      style={{ backgroundColor: '#f9f9f9', border: '2px solid #722ed1', marginBottom: '24px' }}
+    >
+      <Row gutter={[16, 16]}>
+        <Col span={24}>
+          <Title level={4} style={{ textAlign: 'center', margin: '0 0 16px 0' }}>
+            useContext 동작 원리
+          </Title>
+        </Col>
+        
+        <Col xs={24} md={8}>
+          <Card size="small" style={{ height: '100%', backgroundColor: '#fff1f0' }}>
+            <Title level={5}>1️⃣ Context 생성</Title>
+            <div style={{ textAlign: 'center', margin: '16px 0' }}>
+              <div style={{ fontSize: '12px', color: '#666' }}>
+                createContext() → Context 객체 생성 → Provider와 Consumer 제공
+              </div>
+            </div>
+          </Card>
+        </Col>
+        
+        <Col xs={24} md={8}>
+          <Card size="small" style={{ height: '100%', backgroundColor: '#f6ffed' }}>
+            <Title level={5}>2️⃣ Provider 제공</Title>
+            <div style={{ textAlign: 'center', margin: '16px 0' }}>
+              <div style={{ fontSize: '12px', color: '#666' }}>
+                Provider로 감싸기 → value 속성으로 데이터 전달 → 하위 컴포넌트 접근 가능
+              </div>
+            </div>
+          </Card>
+        </Col>
+        
+        <Col xs={24} md={8}>
+          <Card size="small" style={{ height: '100%', backgroundColor: '#f0f8ff' }}>
+            <Title level={5}>3️⃣ Context 소비</Title>
+            <div style={{ textAlign: 'center', margin: '16px 0' }}>
+              <div style={{ fontSize: '12px', color: '#666' }}>
+                useContext(Context) → 가장 가까운 Provider의 value 반환 → 데이터 사용
+              </div>
+            </div>
+          </Card>
+        </Col>
+        
+        <Col xs={24} md={12}>
+          <Title level={5}>🔧 주요 특징</Title>
+          <ul style={{ fontSize: '13px', margin: 0, paddingLeft: '16px' }}>
+            <li>prop drilling 문제 해결</li>
+            <li>전역 상태 관리 가능</li>
+            <li>컴포넌트 트리 어디서든 접근</li>
+            <li>Provider 값 변경 시 자동 리렌더링</li>
+            <li>여러 Context 중첩 사용 가능</li>
+          </ul>
+        </Col>
+        
+        <Col xs={24} md={12}>
+          <Title level={5}>📊 사용 패턴</Title>
+          <ul style={{ fontSize: '13px', margin: 0, paddingLeft: '16px' }}>
+            <li>테마 설정: 라이트/다크 모드 전환</li>
+            <li>사용자 인증: 로그인 상태 관리</li>
+            <li>언어 설정: 다국어 지원</li>
+            <li>장바구니: 전역 상태 관리</li>
+            <li>설정 정보: 앱 전체 구성</li>
+          </ul>
+        </Col>
+        
+        <Col span={24}>
+          <Title level={5}>⚡ Context vs Props 비교</Title>
+          <Row gutter={[16, 8]}>
+            <Col xs={24} md={12}>
+              <div style={{ backgroundColor: '#fff2e8', padding: '12px', borderRadius: '4px' }}>
+                <Text strong>Props 방식</Text>
+                <div style={{ fontSize: '12px', marginTop: '8px' }}>
+                  • 컴포넌트 간 직접 전달<br/>
+                  • 중간 컴포넌트도 props 전달 필요<br/>
+                  • prop drilling 발생 가능
+                </div>
+              </div>
+            </Col>
+            <Col xs={24} md={12}>
+              <div style={{ backgroundColor: '#f6ffed', padding: '12px', borderRadius: '4px' }}>
+                <Text strong>Context 방식</Text>
+                <div style={{ fontSize: '12px', marginTop: '8px' }}>
+                  • Provider로 감싸진 모든 하위 컴포넌트 접근<br/>
+                  • 중간 컴포넌트 건너뛰기 가능<br/>
+                  • 전역 상태 관리에 적합
+                </div>
+              </div>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+    </Card>
+  )
+}
+
+// =====================================
 // 1. 테마 관리를 위한 Context 생성
 // =====================================
 // 테마 상태를 전역으로 관리하기 위한 Context 생성
@@ -51,14 +152,46 @@ const ThemeComponent = () => {
   const { theme, toggleTheme } = useContext(ThemeContext)
   
   return (
-    <Card 
-      title={<><BulbOutlined /> 테마 설정</>}
-      // 현재 테마에 따라 동적으로 스타일 변경
-      style={{
-        backgroundColor: theme === 'dark' ? '#1f1f1f' : '#fff',
-        color: theme === 'dark' ? '#fff' : '#000'
-      }}
-    >
+    <div>
+      {/* useContext 사용 분석 */}
+      <Card 
+        size="small" 
+        style={{ backgroundColor: '#f0f8ff', border: '1px solid #91d5ff', marginBottom: '16px' }}
+        title="🔧 useContext 사용 분석 - 테마 관리"
+      >
+        <Row gutter={[16, 8]}>
+          <Col span={24}>
+            <Text strong>Context:</Text> <Text code>ThemeContext</Text>
+            <br />
+            <Text strong>제공 데이터:</Text> <Text>theme (문자열), toggleTheme (함수)</Text>
+          </Col>
+          <Col span={24}>
+            <Title level={5} style={{ margin: '8px 0 4px 0' }}>💡 사용 목적:</Title>
+            <ul style={{ fontSize: '12px', margin: 0, paddingLeft: '16px' }}>
+              <li>전역 테마 상태를 여러 컴포넌트에서 공유</li>
+              <li>테마 변경 시 모든 관련 컴포넌트 자동 업데이트</li>
+              <li>라이트/다크 모드 전환 기능 제공</li>
+            </ul>
+          </Col>
+          <Col span={24}>
+            <Title level={5} style={{ margin: '8px 0 4px 0' }}>🔄 데이터 흐름:</Title>
+            <div style={{ backgroundColor: '#f6f6f6', padding: '8px', borderRadius: '4px', fontSize: '11px' }}>
+              <Text>ThemeProvider → useContext(ThemeContext) → {"{"}theme, toggleTheme{"}"}</Text>
+              <br />
+              <Text type="secondary">→ 모든 하위 컴포넌트에서 테마 상태 접근 가능</Text>
+            </div>
+          </Col>
+        </Row>
+      </Card>
+
+      <Card 
+        title={<><BulbOutlined /> 테마 설정</>}
+        // 현재 테마에 따라 동적으로 스타일 변경
+        style={{
+          backgroundColor: theme === 'dark' ? '#1f1f1f' : '#fff',
+          color: theme === 'dark' ? '#fff' : '#000'
+        }}
+      >
       <Space direction="vertical" size="middle">
         {/* 현재 테마 상태 표시 */}
         <Text style={{ color: theme === 'dark' ? '#fff' : '#000' }}>
@@ -77,6 +210,7 @@ const ThemeComponent = () => {
         </Paragraph>
       </Space>
     </Card>
+    </div>
   )
 }
 
@@ -115,7 +249,39 @@ const UserProfile = () => {
   const { user } = useContext(UserContext)
   
   return (
-    <Card title={<><UserOutlined /> 사용자 프로필</>}>
+    <div>
+      {/* useContext 사용 분석 */}
+      <Card 
+        size="small" 
+        style={{ backgroundColor: '#f0f8ff', border: '1px solid #91d5ff', marginBottom: '16px' }}
+        title="🔧 useContext 사용 분석 - 사용자 프로필 (읽기)"
+      >
+        <Row gutter={[16, 8]}>
+          <Col span={24}>
+            <Text strong>Context:</Text> <Text code>UserContext</Text>
+            <br />
+            <Text strong>사용 데이터:</Text> <Text>user (객체) - 읽기 전용</Text>
+          </Col>
+          <Col span={24}>
+            <Title level={5} style={{ margin: '8px 0 4px 0' }}>💡 사용 목적:</Title>
+            <ul style={{ fontSize: '12px', margin: 0, paddingLeft: '16px' }}>
+              <li>사용자 정보를 읽기 전용으로 표시</li>
+              <li>다른 컴포넌트의 설정 변경사항 자동 반영</li>
+              <li>필요한 데이터만 선택적으로 구조분해</li>
+            </ul>
+          </Col>
+          <Col span={24}>
+            <Title level={5} style={{ margin: '8px 0 4px 0' }}>🔄 데이터 접근:</Title>
+            <div style={{ backgroundColor: '#f6f6f6', padding: '8px', borderRadius: '4px', fontSize: '11px' }}>
+              <Text code>const {"{"}user{"}"} = useContext(UserContext)</Text>
+              <br />
+              <Text type="secondary">→ updateUser는 사용하지 않아 구조분해에서 제외</Text>
+            </div>
+          </Col>
+        </Row>
+      </Card>
+
+      <Card title={<><UserOutlined /> 사용자 프로필</>}>
       <Space direction="vertical" size="small">
         {/* 사용자 정보를 읽기 전용으로 표시 */}
         <Text><strong>이름:</strong> {user.name}</Text>
@@ -123,6 +289,7 @@ const UserProfile = () => {
         <Text><strong>역할:</strong> <Tag color="blue">{user.role}</Tag></Text>
       </Space>
     </Card>
+    </div>
   )
 }
 
@@ -142,7 +309,39 @@ const UserSettings = () => {
   }
 
   return (
-    <Card title={<><SettingOutlined /> 설정 변경</>}>
+    <div>
+      {/* useContext 사용 분석 */}
+      <Card 
+        size="small" 
+        style={{ backgroundColor: '#f0f8ff', border: '1px solid #91d5ff', marginBottom: '16px' }}
+        title="🔧 useContext 사용 분석 - 사용자 설정 (쓰기)"
+      >
+        <Row gutter={[16, 8]}>
+          <Col span={24}>
+            <Text strong>Context:</Text> <Text code>UserContext</Text>
+            <br />
+            <Text strong>사용 데이터:</Text> <Text>user (객체), updateUser (함수)</Text>
+          </Col>
+          <Col span={24}>
+            <Title level={5} style={{ margin: '8px 0 4px 0' }}>💡 사용 목적:</Title>
+            <ul style={{ fontSize: '12px', margin: 0, paddingLeft: '16px' }}>
+              <li>사용자 정보를 수정할 수 있는 설정 인터페이스 제공</li>
+              <li>Context의 updateUser 함수로 전역 상태 업데이트</li>
+              <li>변경사항이 UserProfile 컴포넌트에 즉시 반영</li>
+            </ul>
+          </Col>
+          <Col span={24}>
+            <Title level={5} style={{ margin: '8px 0 4px 0' }}>🔄 상태 업데이트:</Title>
+            <div style={{ backgroundColor: '#f6f6f6', padding: '8px', borderRadius: '4px', fontSize: '11px' }}>
+              <Text code>updateUser({"{"}name: newValue{"}"})</Text>
+              <br />
+              <Text type="secondary">→ 스프레드 연산자로 기존 데이터 유지하며 부분 업데이트</Text>
+            </div>
+          </Col>
+        </Row>
+      </Card>
+
+      <Card title={<><SettingOutlined /> 설정 변경</>}>
       <Space direction="vertical" size="middle" style={{ width: '100%' }}>
         {/* 이름 변경 입력 필드 */}
         <div>
@@ -169,6 +368,7 @@ const UserSettings = () => {
         </div>
       </Space>
     </Card>
+    </div>
   )
 }
 
@@ -257,7 +457,39 @@ const ProductList = () => {
   ]
 
   return (
-    <Card title="상품 목록">
+    <div>
+      {/* useContext 사용 분석 */}
+      <Card 
+        size="small" 
+        style={{ backgroundColor: '#f0f8ff', border: '1px solid #91d5ff', marginBottom: '16px' }}
+        title="🔧 useContext 사용 분석 - 상품 목록"
+      >
+        <Row gutter={[16, 8]}>
+          <Col span={24}>
+            <Text strong>Context:</Text> <Text code>CartContext</Text>
+            <br />
+            <Text strong>사용 함수:</Text> <Text>addItem (상품 추가 함수)</Text>
+          </Col>
+          <Col span={24}>
+            <Title level={5} style={{ margin: '8px 0 4px 0' }}>💡 사용 목적:</Title>
+            <ul style={{ fontSize: '12px', margin: 0, paddingLeft: '16px' }}>
+              <li>장바구니에 상품을 추가하는 기능만 필요</li>
+              <li>선택적 구조분해로 필요한 함수만 가져오기</li>
+              <li>장바구니 상태는 직접 접근하지 않음</li>
+            </ul>
+          </Col>
+          <Col span={24}>
+            <Title level={5} style={{ margin: '8px 0 4px 0' }}>🔄 함수 사용:</Title>
+            <div style={{ backgroundColor: '#f6f6f6', padding: '8px', borderRadius: '4px', fontSize: '11px' }}>
+              <Text code>const {"{"}addItem{"}"} = useContext(CartContext)</Text>
+              <br />
+              <Text type="secondary">→ 다른 장바구니 함수들은 사용하지 않아 제외</Text>
+            </div>
+          </Col>
+        </Row>
+      </Card>
+
+      <Card title="상품 목록">
       <Space direction="vertical" size="small" style={{ width: '100%' }}>
         {/* 각 상품을 순회하며 표시 */}
         {products.map(product => (
@@ -288,6 +520,7 @@ const ProductList = () => {
         ))}
       </Space>
     </Card>
+    </div>
   )
 }
 
@@ -297,7 +530,39 @@ const ShoppingCart = () => {
   const { items, updateQuantity, removeItem, getTotalItems, getTotalPrice } = useContext(CartContext)
 
   return (
-    <Card 
+    <div>
+      {/* useContext 사용 분석 */}
+      <Card 
+        size="small" 
+        style={{ backgroundColor: '#f0f8ff', border: '1px solid #91d5ff', marginBottom: '16px' }}
+        title="🔧 useContext 사용 분석 - 장바구니"
+      >
+        <Row gutter={[16, 8]}>
+          <Col span={24}>
+            <Text strong>Context:</Text> <Text code>CartContext</Text>
+            <br />
+            <Text strong>사용 데이터:</Text> <Text>items, updateQuantity, removeItem, getTotalItems, getTotalPrice</Text>
+          </Col>
+          <Col span={24}>
+            <Title level={5} style={{ margin: '8px 0 4px 0' }}>💡 사용 목적:</Title>
+            <ul style={{ fontSize: '12px', margin: 0, paddingLeft: '16px' }}>
+              <li>장바구니의 모든 기능을 제공하는 통합 인터페이스</li>
+              <li>복잡한 상태 로직을 Context에서 관리</li>
+              <li>실시간으로 총 개수와 가격 계산</li>
+            </ul>
+          </Col>
+          <Col span={24}>
+            <Title level={5} style={{ margin: '8px 0 4px 0' }}>🔄 복합 상태 관리:</Title>
+            <div style={{ backgroundColor: '#f6f6f6', padding: '8px', borderRadius: '4px', fontSize: '11px' }}>
+              <Text>• 배열 상태 (items) + 계산 함수들 (getTotalItems, getTotalPrice)</Text>
+              <br />
+              <Text type="secondary">→ 복잡한 비즈니스 로직을 Context에서 캡슐화</Text>
+            </div>
+          </Col>
+        </Row>
+      </Card>
+
+      <Card 
       title={
         <>
           <ShoppingCartOutlined /> 
@@ -364,6 +629,7 @@ const ShoppingCart = () => {
         </Space>
       )}
     </Card>
+    </div>
   )
 }
 
@@ -416,7 +682,39 @@ const LanguageSelector = () => {
   const { language, setLanguage, getMessage } = useContext(LanguageContext)
 
   return (
-    <Card title={<><GlobalOutlined /> 언어 설정</>}>
+    <div>
+      {/* useContext 사용 분석 */}
+      <Card 
+        size="small" 
+        style={{ backgroundColor: '#f0f8ff', border: '1px solid #91d5ff', marginBottom: '16px' }}
+        title="🔧 useContext 사용 분석 - 다국어 지원"
+      >
+        <Row gutter={[16, 8]}>
+          <Col span={24}>
+            <Text strong>Context:</Text> <Text code>LanguageContext</Text>
+            <br />
+            <Text strong>사용 데이터:</Text> <Text>language, setLanguage, getMessage</Text>
+          </Col>
+          <Col span={24}>
+            <Title level={5} style={{ margin: '8px 0 4px 0' }}>💡 사용 목적:</Title>
+            <ul style={{ fontSize: '12px', margin: 0, paddingLeft: '16px' }}>
+              <li>다국어 메시지를 동적으로 표시</li>
+              <li>언어 변경 시 모든 텍스트 자동 업데이트</li>
+              <li>Context에서 메시지 로직 중앙 관리</li>
+            </ul>
+          </Col>
+          <Col span={24}>
+            <Title level={5} style={{ margin: '8px 0 4px 0' }}>🔄 메시지 처리:</Title>
+            <div style={{ backgroundColor: '#f6f6f6', padding: '8px', borderRadius: '4px', fontSize: '11px' }}>
+              <Text code>getMessage('welcome')</Text>
+              <br />
+              <Text type="secondary">→ 현재 언어에 맞는 메시지 자동 반환</Text>
+            </div>
+          </Col>
+        </Row>
+      </Card>
+
+      <Card title={<><GlobalOutlined /> 언어 설정</>}>
       <Space direction="vertical" size="middle">
         {/* 현재 선택된 언어 표시 */}
         <div>
@@ -443,6 +741,7 @@ const LanguageSelector = () => {
         </div>
       </Space>
     </Card>
+    </div>
   )
 }
 
@@ -465,6 +764,9 @@ const UseContextPage = () => {
       </div>
 
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
+        {/* useContext 기본 개념 */}
+        <UseContextConceptCard />
+
         {/* 1. 테마 Context 예제 */}
         <Card title="1. 테마 Context" style={{ backgroundColor: '#f6f6f6' }}>
           <Paragraph>
