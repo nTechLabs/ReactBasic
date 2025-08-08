@@ -92,6 +92,578 @@ const UseStatePage = () => {
         <Paragraph>React useState 훅의 다양한 사용 패턴을 확인해보세요</Paragraph>
       </div>
 
+      {/* useState 기본 개념 도식화 */}
+      <Card 
+        title="📚 useState 기본 개념" 
+        style={{ 
+          backgroundColor: '#f8fffe', 
+          border: '2px solid #52c41a',
+          borderRadius: '12px'
+        }}
+      >
+        <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+          {/* 기본 설명 */}
+          <div style={{ textAlign: 'center', marginBottom: '16px' }}>
+            <Title level={4} style={{ color: '#52c41a', marginBottom: '8px' }}>
+              🎯 useState는 함수형 컴포넌트에서 상태를 관리하는 React Hook입니다
+            </Title>
+            <Text type="secondary">
+              상태값과 그 상태를 변경할 수 있는 함수를 반환하여 컴포넌트의 데이터를 관리합니다
+            </Text>
+          </div>
+
+          {/* 구조 도식화 */}
+          <Row gutter={[16, 16]} justify="center">
+            <Col xs={24} lg={20}>
+              <div style={{ 
+                padding: '20px',
+                backgroundColor: '#fff',
+                border: '1px solid #d9d9d9',
+                borderRadius: '8px',
+                position: 'relative'
+              }}>
+                {/* 코드 구조 */}
+                <div style={{ 
+                  fontFamily: 'monospace',
+                  fontSize: '16px',
+                  textAlign: 'center',
+                  marginBottom: '20px',
+                  padding: '12px',
+                  backgroundColor: '#f6f6f6',
+                  borderRadius: '6px',
+                  border: '1px solid #d9d9d9'
+                }}>
+                  <Text code style={{ fontSize: '16px' }}>
+                    const [상태값, 상태변경함수] = useState(초기값)
+                  </Text>
+                </div>
+
+                {/* 화살표와 설명 */}
+                <Row gutter={[16, 16]} align="middle">
+                  <Col xs={24} md={8}>
+                    <div style={{ 
+                      textAlign: 'center',
+                      padding: '16px',
+                      backgroundColor: '#e6f7ff',
+                      borderRadius: '8px',
+                      border: '2px solid #1890ff'
+                    }}>
+                      <Title level={5} style={{ color: '#1890ff', margin: '0 0 8px 0' }}>
+                        📊 상태값
+                      </Title>
+                      <Text style={{ fontSize: '13px' }}>
+                        현재 컴포넌트의<br/>
+                        데이터 상태
+                      </Text>
+                    </div>
+                  </Col>
+
+                  <Col xs={24} md={8}>
+                    <div style={{ 
+                      textAlign: 'center',
+                      padding: '16px',
+                      backgroundColor: '#fff7e6',
+                      borderRadius: '8px',
+                      border: '2px solid #fa8c16'
+                    }}>
+                      <Title level={5} style={{ color: '#fa8c16', margin: '0 0 8px 0' }}>
+                        ⚡ 상태변경함수
+                      </Title>
+                      <Text style={{ fontSize: '13px' }}>
+                        상태를 업데이트하고<br/>
+                        리렌더링을 트리거
+                      </Text>
+                    </div>
+                  </Col>
+
+                  <Col xs={24} md={8}>
+                    <div style={{ 
+                      textAlign: 'center',
+                      padding: '16px',
+                      backgroundColor: '#f6ffed',
+                      borderRadius: '8px',
+                      border: '2px solid #52c41a'
+                    }}>
+                      <Title level={5} style={{ color: '#52c41a', margin: '0 0 8px 0' }}>
+                        🎯 초기값
+                      </Title>
+                      <Text style={{ fontSize: '13px' }}>
+                        컴포넌트 첫 렌더링 시<br/>
+                        사용할 기본값
+                      </Text>
+                    </div>
+                  </Col>
+                </Row>
+
+                {/* 동작 과정 */}
+                <div style={{ marginTop: '24px' }}>
+                  <Title level={5} style={{ textAlign: 'center', marginBottom: '16px', color: '#722ed1' }}>
+                    🔄 useState 동작 과정
+                  </Title>
+                  
+                  <div style={{ 
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    flexWrap: 'wrap',
+                    gap: '12px'
+                  }}>
+                    <div style={{ flex: 1, textAlign: 'center', minWidth: '120px' }}>
+                      <div style={{ 
+                        width: '40px',
+                        height: '40px',
+                        borderRadius: '50%',
+                        backgroundColor: '#1890ff',
+                        color: 'white',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        margin: '0 auto 8px',
+                        fontWeight: 'bold'
+                      }}>1</div>
+                      <Text style={{ fontSize: '12px', display: 'block' }}>
+                        <strong>초기화</strong><br/>
+                        초기값으로 상태 설정
+                      </Text>
+                    </div>
+
+                    <div style={{ color: '#bfbfbf', fontSize: '18px' }}>→</div>
+
+                    <div style={{ flex: 1, textAlign: 'center', minWidth: '120px' }}>
+                      <div style={{ 
+                        width: '40px',
+                        height: '40px',
+                        borderRadius: '50%',
+                        backgroundColor: '#fa8c16',
+                        color: 'white',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        margin: '0 auto 8px',
+                        fontWeight: 'bold'
+                      }}>2</div>
+                      <Text style={{ fontSize: '12px', display: 'block' }}>
+                        <strong>이벤트 발생</strong><br/>
+                        사용자 상호작용
+                      </Text>
+                    </div>
+
+                    <div style={{ color: '#bfbfbf', fontSize: '18px' }}>→</div>
+
+                    <div style={{ flex: 1, textAlign: 'center', minWidth: '120px' }}>
+                      <div style={{ 
+                        width: '40px',
+                        height: '40px',
+                        borderRadius: '50%',
+                        backgroundColor: '#52c41a',
+                        color: 'white',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        margin: '0 auto 8px',
+                        fontWeight: 'bold'
+                      }}>3</div>
+                      <Text style={{ fontSize: '12px', display: 'block' }}>
+                        <strong>상태 업데이트</strong><br/>
+                        setState 함수 호출
+                      </Text>
+                    </div>
+
+                    <div style={{ color: '#bfbfbf', fontSize: '18px' }}>→</div>
+
+                    <div style={{ flex: 1, textAlign: 'center', minWidth: '120px' }}>
+                      <div style={{ 
+                        width: '40px',
+                        height: '40px',
+                        borderRadius: '50%',
+                        backgroundColor: '#722ed1',
+                        color: 'white',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        margin: '0 auto 8px',
+                        fontWeight: 'bold'
+                      }}>4</div>
+                      <Text style={{ fontSize: '12px', display: 'block' }}>
+                        <strong>리렌더링</strong><br/>
+                        새로운 값으로 화면 갱신
+                      </Text>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 함수형 업데이트 상세 설명 */}
+                <div style={{ marginTop: '24px' }}>
+                  <Title level={5} style={{ textAlign: 'center', marginBottom: '16px', color: '#eb2f96' }}>
+                    ⚠️ 함수형 업데이트가 중요한 이유
+                  </Title>
+                  
+                  <div style={{ 
+                    padding: '16px',
+                    backgroundColor: '#fff0f6',
+                    borderRadius: '8px',
+                    border: '2px solid #eb2f96',
+                    marginBottom: '16px'
+                  }}>
+                    <Text strong style={{ color: '#eb2f96', display: 'block', marginBottom: '8px' }}>
+                      🚨 문제가 되는 코드 (직접 값 사용)
+                    </Text>
+                    <pre style={{ 
+                      margin: '8px 0',
+                      fontSize: '11px',
+                      lineHeight: '1.4',
+                      fontFamily: 'monospace',
+                      backgroundColor: '#fff',
+                      padding: '8px',
+                      borderRadius: '4px',
+                      border: '1px solid #ffadd6'
+                    }}>
+{`const [count, setCount] = useState(0)
+
+// ❌ 문제: 여러 번 빠르게 클릭하면 예상과 다르게 동작
+const handleMultipleClicks = () => {
+  setCount(count + 1)  // 첫 번째 클릭: 0 + 1 = 1
+  setCount(count + 1)  // 두 번째 클릭: 여전히 0 + 1 = 1 (예상: 2)
+  setCount(count + 1)  // 세 번째 클릭: 여전히 0 + 1 = 1 (예상: 3)
+}
+// 결과: 3이 아닌 1이 됨`}
+                    </pre>
+                    <Text style={{ fontSize: '11px', color: '#eb2f96' }}>
+                      💡 이유: React는 상태 업데이트를 배치(batch)로 처리하므로, count 값이 아직 업데이트되지 않은 상태에서 여러 번 호출됨
+                    </Text>
+                  </div>
+
+                  <div style={{ 
+                    padding: '16px',
+                    backgroundColor: '#f6ffed',
+                    borderRadius: '8px',
+                    border: '2px solid #52c41a',
+                    marginBottom: '16px'
+                  }}>
+                    <Text strong style={{ color: '#52c41a', display: 'block', marginBottom: '8px' }}>
+                      ✅ 올바른 코드 (함수형 업데이트)
+                    </Text>
+                    <pre style={{ 
+                      margin: '8px 0',
+                      fontSize: '11px',
+                      lineHeight: '1.4',
+                      fontFamily: 'monospace',
+                      backgroundColor: '#fff',
+                      padding: '8px',
+                      borderRadius: '4px',
+                      border: '1px solid #b7eb8f'
+                    }}>
+{`const [count, setCount] = useState(0)
+
+// ✅ 해결: 함수형 업데이트 사용
+const handleMultipleClicks = () => {
+  setCount(prev => prev + 1)  // 첫 번째: 0 + 1 = 1
+  setCount(prev => prev + 1)  // 두 번째: 1 + 1 = 2  
+  setCount(prev => prev + 1)  // 세 번째: 2 + 1 = 3
+}
+// 결과: 정확히 3이 됨`}
+                    </pre>
+                    <Text style={{ fontSize: '11px', color: '#52c41a' }}>
+                      💡 이유: 함수형 업데이트는 항상 최신 상태값을 받아서 계산하므로 정확한 결과를 보장함
+                    </Text>
+                  </div>
+
+                  <Row gutter={16}>
+                    <Col xs={24} md={12}>
+                      <div style={{ 
+                        padding: '12px',
+                        backgroundColor: '#fff7e6',
+                        borderRadius: '6px',
+                        border: '1px solid #ffd591'
+                      }}>
+                        <Text strong style={{ fontSize: '12px', color: '#fa8c16', display: 'block', marginBottom: '8px' }}>
+                          🎯 언제 함수형 업데이트를 사용해야 할까?
+                        </Text>
+                        <ul style={{ 
+                          margin: 0,
+                          paddingLeft: '16px',
+                          fontSize: '11px',
+                          lineHeight: '1.6',
+                          color: '#666'
+                        }}>
+                          <li><strong>이전 상태에 의존:</strong> count + 1, count * 2 등</li>
+                          <li><strong>배열 조작:</strong> [...prev, newItem], prev.filter() 등</li>
+                          <li><strong>객체 업데이트:</strong> {`{...prev, newProperty}`} 등</li>
+                          <li><strong>연속 업데이트:</strong> 빠른 연속 클릭, 애니메이션 등</li>
+                          <li><strong>useEffect 내부:</strong> 의존성 배열 최적화</li>
+                        </ul>
+                      </div>
+                    </Col>
+                    
+                    <Col xs={24} md={12}>
+                      <div style={{ 
+                        padding: '12px',
+                        backgroundColor: '#f0f6ff',
+                        borderRadius: '6px',
+                        border: '1px solid #d6e4ff'
+                      }}>
+                        <Text strong style={{ fontSize: '12px', color: '#1890ff', display: 'block', marginBottom: '8px' }}>
+                          📚 추가 예제들
+                        </Text>
+                        <pre style={{ 
+                          margin: 0,
+                          fontSize: '10px',
+                          lineHeight: '1.4',
+                          fontFamily: 'monospace',
+                          color: '#666'
+                        }}>
+{`// 배열에 항목 추가
+setItems(prev => [...prev, newItem])
+
+// 배열에서 항목 제거  
+setItems(prev => prev.filter(item => item.id !== id))
+
+// 객체 속성 업데이트
+setUser(prev => ({ ...prev, name: 'New Name' }))
+
+// 토글 기능
+setIsOpen(prev => !prev)
+
+// 카운터 증가 (복수 클릭 안전)
+setCount(prev => prev + 1)`}
+                        </pre>
+                      </div>
+                    </Col>
+                  </Row>
+                </div>
+
+                {/* 예제 코드 */}
+                <div style={{ marginTop: '24px' }}>
+                  <Title level={5} style={{ textAlign: 'center', marginBottom: '12px', color: '#13c2c2' }}>
+                    💡 기본 사용법
+                  </Title>
+                  
+                  <Row gutter={16}>
+                    <Col xs={24} md={12}>
+                      <div style={{ 
+                        padding: '12px',
+                        backgroundColor: '#f6f6f6',
+                        borderRadius: '6px',
+                        border: '1px solid #d9d9d9'
+                      }}>
+                        <Text strong style={{ fontSize: '12px', color: '#666', display: 'block', marginBottom: '8px' }}>
+                          📝 기본 코드
+                        </Text>
+                        <pre style={{ 
+                          margin: 0,
+                          fontSize: '11px',
+                          lineHeight: '1.4',
+                          fontFamily: 'monospace'
+                        }}>
+{`// 1. useState 훅 import
+import { useState } from 'react'
+
+// 2. 컴포넌트 내부에서 사용
+const [count, setCount] = useState(0)
+
+// 3. 상태 변경
+const increment = () => {
+  setCount(count + 1)  // 직접 값
+  // 또는 (권장)
+  setCount(prev => prev + 1)  // 함수형
+}`}
+                        </pre>
+                      </div>
+                    </Col>
+                    
+                    <Col xs={24} md={12}>
+                      <div style={{ 
+                        padding: '12px',
+                        backgroundColor: '#f0f6ff',
+                        borderRadius: '6px',
+                        border: '1px solid #d6e4ff'
+                      }}>
+                        <Text strong style={{ fontSize: '12px', color: '#1890ff', display: 'block', marginBottom: '8px' }}>
+                          📋 주요 특징
+                        </Text>
+                        <ul style={{ 
+                          margin: 0,
+                          paddingLeft: '16px',
+                          fontSize: '11px',
+                          lineHeight: '1.6',
+                          color: '#666'
+                        }}>
+                          <li>함수형 컴포넌트에서만 사용 가능</li>
+                          <li>상태 변경 시 자동으로 리렌더링</li>
+                          <li>비동기적으로 상태가 업데이트됨</li>
+                          <li>이전 상태에 의존적인 경우 함수형 업데이트 권장</li>
+                          <li>객체나 배열은 불변성을 유지해야 함</li>
+                        </ul>
+                      </div>
+                    </Col>
+                  </Row>
+                </div>
+              </div>
+            </Col>
+          </Row>
+        </Space>
+      </Card>
+
+      {/* 함수형 업데이트 실습 데모 */}
+      <Card 
+        title="🧪 함수형 업데이트 실습" 
+        style={{ 
+          backgroundColor: '#f9f0ff', 
+          border: '2px solid #722ed1',
+          borderRadius: '12px'
+        }}
+      >
+        <Space direction="vertical" size="middle" style={{ width: '100%' }}>
+          <div style={{ textAlign: 'center', marginBottom: '16px' }}>
+            <Title level={4} style={{ color: '#722ed1', marginBottom: '8px' }}>
+              🎮 직접 체험해보세요! 차이점을 확인할 수 있습니다
+            </Title>
+            <Text type="secondary">
+              "빠른 연속 클릭" 버튼을 눌러서 직접 값 vs 함수형 업데이트의 차이를 경험해보세요
+            </Text>
+          </div>
+
+          <Row gutter={[16, 16]}>
+            {/* 직접 값 사용 (문제가 있는 방식) */}
+            <Col xs={24} md={12}>
+              <div style={{ 
+                padding: '16px',
+                backgroundColor: '#fff0f6',
+                borderRadius: '8px',
+                border: '2px solid #eb2f96',
+                textAlign: 'center'
+              }}>
+                <Title level={5} style={{ color: '#eb2f96', margin: '0 0 12px 0' }}>
+                  ❌ 직접 값 사용 (문제)
+                </Title>
+                <div style={{ 
+                  fontSize: '48px', 
+                  fontWeight: 'bold',
+                  color: '#eb2f96',
+                  marginBottom: '12px',
+                  fontFamily: 'monospace'
+                }}>
+                  {count}
+                </div>
+                <Space direction="vertical" style={{ width: '100%' }}>
+                  <Button 
+                    type="primary" 
+                    danger
+                    onClick={() => {
+                      // 의도적으로 문제가 있는 방식 사용
+                      setCount(count + 1)
+                      setCount(count + 1)
+                      setCount(count + 1)
+                    }}
+                    block
+                  >
+                    빠른 연속 클릭 (+3 시도)
+                  </Button>
+                  <Text style={{ fontSize: '12px', color: '#eb2f96' }}>
+                    버튼을 누르면 3이 아닌 1만 증가합니다
+                  </Text>
+                  <Button 
+                    size="small" 
+                    onClick={() => setCount(0)}
+                    ghost
+                    style={{ borderColor: '#eb2f96', color: '#eb2f96' }}
+                  >
+                    리셋
+                  </Button>
+                </Space>
+              </div>
+            </Col>
+
+            {/* 함수형 업데이트 (올바른 방식) */}
+            <Col xs={24} md={12}>
+              <div style={{ 
+                padding: '16px',
+                backgroundColor: '#f6ffed',
+                borderRadius: '8px',
+                border: '2px solid #52c41a',
+                textAlign: 'center'
+              }}>
+                <Title level={5} style={{ color: '#52c41a', margin: '0 0 12px 0' }}>
+                  ✅ 함수형 업데이트 (올바름)
+                </Title>
+                <div style={{ 
+                  fontSize: '48px', 
+                  fontWeight: 'bold',
+                  color: '#52c41a',
+                  marginBottom: '12px',
+                  fontFamily: 'monospace'
+                }}>
+                  {count}
+                </div>
+                <Space direction="vertical" style={{ width: '100%' }}>
+                  <Button 
+                    type="primary"
+                    onClick={() => {
+                      // 올바른 함수형 업데이트 방식
+                      setCount(prev => prev + 1)
+                      setCount(prev => prev + 1)  
+                      setCount(prev => prev + 1)
+                    }}
+                    style={{ backgroundColor: '#52c41a', borderColor: '#52c41a' }}
+                    block
+                  >
+                    빠른 연속 클릭 (+3 정확히)
+                  </Button>
+                  <Text style={{ fontSize: '12px', color: '#52c41a' }}>
+                    버튼을 누르면 정확히 3이 증가합니다
+                  </Text>
+                  <Button 
+                    size="small" 
+                    onClick={() => setCount(0)}
+                    ghost
+                    style={{ borderColor: '#52c41a', color: '#52c41a' }}
+                  >
+                    리셋
+                  </Button>
+                </Space>
+              </div>
+            </Col>
+          </Row>
+
+          {/* 설명 */}
+          <div style={{ 
+            padding: '16px',
+            backgroundColor: '#fff',
+            borderRadius: '8px',
+            border: '1px solid #d9d9d9',
+            marginTop: '16px'
+          }}>
+            <Title level={5} style={{ margin: '0 0 12px 0', color: '#722ed1' }}>
+              🔍 왜 이런 차이가 발생할까요?
+            </Title>
+            <Row gutter={16}>
+              <Col xs={24} md={12}>
+                <div style={{ marginBottom: '12px' }}>
+                  <Text strong style={{ color: '#eb2f96' }}>❌ 직접 값 사용 시:</Text>
+                  <ul style={{ margin: '8px 0', paddingLeft: '20px', fontSize: '12px' }}>
+                    <li>setCount(count + 1) 호출 시 count는 여전히 초기값</li>
+                    <li>React가 상태 업데이트를 배치 처리함</li>
+                    <li>세 번 모두 같은 값(현재 count)을 참조</li>
+                    <li>결과: 예상과 다른 결과</li>
+                  </ul>
+                </div>
+              </Col>
+              <Col xs={24} md={12}>
+                <div style={{ marginBottom: '12px' }}>
+                  <Text strong style={{ color: '#52c41a' }}>✅ 함수형 업데이트 시:</Text>
+                  <ul style={{ margin: '8px 0', paddingLeft: '20px', fontSize: '12px' }}>
+                    <li>setCount(prev {'=>'} prev + 1) 호출 시 항상 최신 값 사용</li>
+                    <li>각 업데이트가 이전 업데이트 결과를 기반으로 함</li>
+                    <li>순차적으로 정확한 계산이 이루어짐</li>
+                    <li>결과: 예상한 대로 정확한 결과</li>
+                  </ul>
+                </div>
+              </Col>
+            </Row>
+          </div>
+        </Space>
+      </Card>
+
       <Row gutter={[16, 16]}>
         {/* 1. 기본 카운터 */}
         <Col xs={24} md={12} lg={8}>
