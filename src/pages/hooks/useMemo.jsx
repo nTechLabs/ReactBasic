@@ -796,6 +796,16 @@ const UseMemoPage = () => {
                         </div>
                       </Col>
                     </Row>
+                    
+                    {/* 의존성 배열 패턴 상세 설명 */}
+                    <div style={{ marginTop: '16px', textAlign: 'center' }}>
+                      <Text style={{ fontSize: '13px', color: '#8c8c8c', lineHeight: '1.6' }}>
+                        <strong>의존성 배열의 패턴 3가지</strong><br/>
+                        1. 컴포넌트 생성시 한번만 실행<br/>
+                        2. 의존성 value변경시에만 재계산<br/>
+                        3. 매 렌더링마다 재계산
+                      </Text>
+                    </div>
                   </div>
 
                   {/* 주요 사용 사례 */}
@@ -911,7 +921,7 @@ const UseMemoPage = () => {
                             📝 복잡한 계산 메모이제이션
                           </Text>
                           <pre style={{ 
-                            margin: 0,
+                            margin: '0 0 8px 0',
                             fontSize: '10px',
                             lineHeight: '1.4',
                             fontFamily: 'monospace'
@@ -924,6 +934,18 @@ const UseMemoPage = () => {
   return result
 }, [count, multiplier])`}
                           </pre>
+                          <div style={{ 
+                            padding: '6px',
+                            backgroundColor: '#e8f4fd',
+                            borderRadius: '4px',
+                            fontSize: '9px',
+                            color: '#1890ff',
+                            lineHeight: '1.3'
+                          }}>
+                            <Text strong style={{ fontSize: '9px', color: '#1890ff' }}>💡 장점:</Text> 
+                            무거운 반복 연산을 메모이제이션하여 불필요한 재계산 방지. 
+                            count/multiplier 변경시에만 재계산되어 성능 향상.
+                          </div>
                         </div>
                       </Col>
                       
@@ -938,7 +960,7 @@ const UseMemoPage = () => {
                             📋 배열 필터링 최적화
                           </Text>
                           <pre style={{ 
-                            margin: 0,
+                            margin: '0 0 8px 0',
                             fontSize: '10px',
                             lineHeight: '1.4',
                             fontFamily: 'monospace'
@@ -950,6 +972,148 @@ const UseMemoPage = () => {
   )
 }, [items, searchTerm])`}
                           </pre>
+                          <div style={{ 
+                            padding: '6px',
+                            backgroundColor: '#e6f7ff',
+                            borderRadius: '4px',
+                            fontSize: '9px',
+                            color: '#1890ff',
+                            lineHeight: '1.3'
+                          }}>
+                            <Text strong style={{ fontSize: '9px', color: '#1890ff' }}>💡 장점:</Text> 
+                            배열 순회와 문자열 변환을 메모이제이션. 
+                            items나 searchTerm 변경시에만 필터링하여 렌더링 성능 개선.
+                          </div>
+                        </div>
+                      </Col>
+                      
+                      <Col xs={24} md={12}>
+                        <div style={{ 
+                          padding: '12px',
+                          backgroundColor: '#fff7e6',
+                          borderRadius: '6px',
+                          border: '1px solid #ffd591'
+                        }}>
+                          <Text strong style={{ fontSize: '12px', color: '#fa8c16', display: 'block', marginBottom: '8px' }}>
+                            📊 데이터 정렬 최적화
+                          </Text>
+                          <pre style={{ 
+                            margin: '0 0 8px 0',
+                            fontSize: '10px',
+                            lineHeight: '1.4',
+                            fontFamily: 'monospace'
+                          }}>
+{`const sortedData = useMemo(() => {
+  return [...data].sort((a, b) => {
+    if (sortBy === 'name') {
+      return a.name.localeCompare(b.name)
+    }
+    return a[sortBy] - b[sortBy]
+  })
+}, [data, sortBy])`}
+                          </pre>
+                          <div style={{ 
+                            padding: '6px',
+                            backgroundColor: '#fff2e8',
+                            borderRadius: '4px',
+                            fontSize: '9px',
+                            color: '#fa8c16',
+                            lineHeight: '1.3'
+                          }}>
+                            <Text strong style={{ fontSize: '9px', color: '#fa8c16' }}>💡 장점:</Text> 
+                            배열 복사 및 정렬 연산을 메모이제이션. 
+                            data나 sortBy 기준 변경시에만 재정렬하여 UI 반응성 향상.
+                          </div>
+                        </div>
+                      </Col>
+                      
+                      <Col xs={24} md={12}>
+                        <div style={{ 
+                          padding: '12px',
+                          backgroundColor: '#f9f0ff',
+                          borderRadius: '6px',
+                          border: '1px solid #d3adf7'
+                        }}>
+                          <Text strong style={{ fontSize: '12px', color: '#722ed1', display: 'block', marginBottom: '8px' }}>
+                            🎯 참조 동등성 최적화
+                          </Text>
+                          <pre style={{ 
+                            margin: '0 0 8px 0',
+                            fontSize: '10px',
+                            lineHeight: '1.4',
+                            fontFamily: 'monospace'
+                          }}>
+{`const memoizedProps = useMemo(() => ({
+  user: { id: userId, name: userName },
+  config: { theme, language },
+  onUpdate: handleUpdate
+}), [userId, userName, theme, language])`}
+                          </pre>
+                          <div style={{ 
+                            padding: '6px',
+                            backgroundColor: '#f0e6ff',
+                            borderRadius: '4px',
+                            fontSize: '9px',
+                            color: '#722ed1',
+                            lineHeight: '1.3'
+                          }}>
+                            <Text strong style={{ fontSize: '9px', color: '#722ed1' }}>💡 장점:</Text> 
+                            객체 참조 안정성 확보로 자식 컴포넌트 불필요한 리렌더링 방지. 
+                            React.memo와 함께 사용시 최적화 효과 극대화.
+                          </div>
+                          
+                          {/* React.memo와 함께 사용하는 추가 예제 */}
+                          <div style={{ marginTop: '8px' }}>
+                            <Text strong style={{ fontSize: '11px', color: '#722ed1', display: 'block', marginBottom: '6px' }}>
+                              🔗 React.memo와 함께 사용하는 패턴:
+                            </Text>
+                            <pre style={{ 
+                              margin: '0 0 6px 0',
+                              fontSize: '9px',
+                              lineHeight: '1.3',
+                              fontFamily: 'monospace',
+                              backgroundColor: '#fafafa',
+                              padding: '4px',
+                              borderRadius: '3px'
+                            }}>
+{`// 자식 컴포넌트를 React.memo로 감싸기
+const ChildComponent = memo(({ config }) => {
+  console.log('Child rendered!')
+  return <div>{config.title}</div>
+})
+
+// 부모에서 useMemo로 props 메모이제이션
+const Parent = () => {
+  const [count, setCount] = useState(0)
+  const [otherState, setOtherState] = useState('')
+  
+  const memoizedConfig = useMemo(() => ({
+    title: 'Title',
+    theme: 'dark',
+    count: count
+  }), [count]) // count 변경시에만 새 객체 생성
+  
+  return (
+    <div>
+      <ChildComponent config={memoizedConfig} />
+      {/* otherState 변경시 Child 리렌더링 안됨 */}
+    </div>
+  )
+}`}
+                            </pre>
+                            <div style={{ 
+                              padding: '4px',
+                              backgroundColor: '#f0e6ff',
+                              borderRadius: '3px',
+                              fontSize: '8px',
+                              color: '#722ed1',
+                              lineHeight: '1.2'
+                            }}>
+                              <Text strong style={{ fontSize: '8px' }}>⚡ 핵심 장점:</Text> 
+                              otherState 변경시 ChildComponent가 리렌더링되지 않음. 
+                              useMemo 없이는 매번 새 객체가 생성되어 React.memo 효과 무력화.
+                            </div>
+                          </div>
                         </div>
                       </Col>
                     </Row>

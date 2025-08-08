@@ -21,6 +21,129 @@ const { Option } = Select
 const { TextArea } = Input
 
 // =====================================
+// 📋 useForm 기본 개념
+// =====================================
+const UseFormConceptCard = () => {
+  return (
+    <Card 
+      title="📋 useForm 기본 개념" 
+      style={{ backgroundColor: '#f9f9f9', border: '2px solid #722ed1', marginBottom: '24px' }}
+    >
+      <Row gutter={[16, 16]}>
+        <Col span={24}>
+          <Title level={4} style={{ textAlign: 'center', margin: '0 0 16px 0' }}>
+            useForm 동작 원리
+          </Title>
+        </Col>
+        
+        <Col xs={24} md={6}>
+          <Card size="small" style={{ height: '100%', backgroundColor: '#fff1f0' }}>
+            <Title level={5}>1️⃣ 상태 초기화</Title>
+            <div style={{ textAlign: 'center', margin: '16px 0' }}>
+              <div style={{ fontSize: '12px', color: '#666' }}>
+                초기값 설정 → 에러 상태 → 터치 상태 → 제출 상태
+              </div>
+            </div>
+          </Card>
+        </Col>
+        
+        <Col xs={24} md={6}>
+          <Card size="small" style={{ height: '100%', backgroundColor: '#f6ffed' }}>
+            <Title level={5}>2️⃣ 입력 처리</Title>
+            <div style={{ textAlign: 'center', margin: '16px 0' }}>
+              <div style={{ fontSize: '12px', color: '#666' }}>
+                값 변경 → 에러 클리어 → 실시간 유효성 검사
+              </div>
+            </div>
+          </Card>
+        </Col>
+        
+        <Col xs={24} md={6}>
+          <Card size="small" style={{ height: '100%', backgroundColor: '#f0f8ff' }}>
+            <Title level={5}>3️⃣ 유효성 검사</Title>
+            <div style={{ textAlign: 'center', margin: '16px 0' }}>
+              <div style={{ fontSize: '12px', color: '#666' }}>
+                규칙 적용 → 에러 메시지 → 전체 폼 검증
+              </div>
+            </div>
+          </Card>
+        </Col>
+        
+        <Col xs={24} md={6}>
+          <Card size="small" style={{ height: '100%', backgroundColor: '#fff7e6' }}>
+            <Title level={5}>4️⃣ 폼 제출</Title>
+            <div style={{ textAlign: 'center', margin: '16px 0' }}>
+              <div style={{ fontSize: '12px', color: '#666' }}>
+                최종 검증 → 제출 처리 → 상태 업데이트
+              </div>
+            </div>
+          </Card>
+        </Col>
+        
+        <Col xs={24} md={12}>
+          <Title level={5}>🔧 주요 기능</Title>
+          <ul style={{ fontSize: '13px', margin: 0, paddingLeft: '16px' }}>
+            <li>폼 상태 관리 (values, errors, touched)</li>
+            <li>실시간 유효성 검사</li>
+            <li>다양한 검증 규칙 지원</li>
+            <li>제출 상태 추적</li>
+            <li>폼 초기화 및 리셋</li>
+            <li>필드별 개별 제어</li>
+          </ul>
+        </Col>
+        
+        <Col xs={24} md={12}>
+          <Title level={5}>📊 검증 규칙 종류</Title>
+          <ul style={{ fontSize: '13px', margin: 0, paddingLeft: '16px' }}>
+            <li><Text code>required</Text>: 필수 입력 검사</li>
+            <li><Text code>minLength/maxLength</Text>: 길이 제한</li>
+            <li><Text code>pattern</Text>: 정규식 패턴 매칭</li>
+            <li><Text code>validator</Text>: 커스텀 검증 함수</li>
+            <li><Text code>message</Text>: 에러 메시지 커스터마이징</li>
+          </ul>
+        </Col>
+        
+        <Col span={24}>
+          <Title level={5}>⚡ 폼 상태 종류</Title>
+          <Row gutter={[16, 8]}>
+            <Col xs={24} md={8}>
+              <div style={{ backgroundColor: '#fff2e8', padding: '12px', borderRadius: '4px' }}>
+                <Text strong>values</Text>
+                <div style={{ fontSize: '12px', marginTop: '8px' }}>
+                  • 모든 필드의 현재 값<br/>
+                  • 실시간으로 업데이트<br/>
+                  • 초기값으로 리셋 가능
+                </div>
+              </div>
+            </Col>
+            <Col xs={24} md={8}>
+              <div style={{ backgroundColor: '#f6ffed', padding: '12px', borderRadius: '4px' }}>
+                <Text strong>errors</Text>
+                <div style={{ fontSize: '12px', marginTop: '8px' }}>
+                  • 필드별 에러 메시지<br/>
+                  • 유효성 검사 결과<br/>
+                  • 조건부 표시 가능
+                </div>
+              </div>
+            </Col>
+            <Col xs={24} md={8}>
+              <div style={{ backgroundColor: '#f0f8ff', padding: '12px', borderRadius: '4px' }}>
+                <Text strong>상태 플래그</Text>
+                <div style={{ fontSize: '12px', marginTop: '8px' }}>
+                  • isValid: 폼 유효성<br/>
+                  • isDirty: 변경 여부<br/>
+                  • isSubmitting: 제출 중
+                </div>
+              </div>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+    </Card>
+  )
+}
+
+// =====================================
 // 커스텀 useForm 훅 구현
 // =====================================
 const useForm = (initialValues = {}, validationRules = {}) => {
@@ -48,17 +171,6 @@ const useForm = (initialValues = {}, validationRules = {}) => {
       }))
     }
   }, [errors])
-
-  // 필드 블러 핸들러 (포커스를 잃을 때)
-  const handleBlur = useCallback((name) => {
-    setTouched(prev => ({
-      ...prev,
-      [name]: true
-    }))
-    
-    // 유효성 검사 실행
-    validateField(name, values[name])
-  }, [values])
 
   // 개별 필드 유효성 검사
   const validateField = useCallback((name, value) => {
@@ -99,9 +211,19 @@ const useForm = (initialValues = {}, validationRules = {}) => {
     return error === ''
   }, [validationRules, values])
 
+  // 필드 블러 핸들러 (포커스를 잃을 때)
+  const handleBlur = useCallback((name) => {
+    setTouched(prev => ({
+      ...prev,
+      [name]: true
+    }))
+    
+    // 유효성 검사 실행
+    validateField(name, values[name])
+  }, [values, validateField])
+
   // 전체 폼 유효성 검사
   const validateForm = useCallback(() => {
-    const newErrors = {}
     let isValid = true
 
     Object.keys(validationRules).forEach(fieldName => {
@@ -266,6 +388,48 @@ const RegistrationForm = () => {
 
   return (
     <Card title="회원가입 폼 (커스텀 useForm 훅)">
+      {/* useForm 사용 분석 */}
+      <Card 
+        size="small" 
+        style={{ backgroundColor: '#f0f8ff', border: '1px solid #91d5ff', marginBottom: '16px' }}
+        title="🔧 useForm 사용 분석 - 회원가입 폼"
+      >
+        <Row gutter={[16, 8]}>
+          <Col span={24}>
+            <Text strong>초기값:</Text> <Text code>username, email, password, confirmPassword, phone, agreeTerms</Text>
+            <br />
+            <Text strong>검증 규칙:</Text> <Text>6개 필드에 대한 복합 유효성 검사</Text>
+          </Col>
+          <Col span={24}>
+            <Title level={5} style={{ margin: '8px 0 4px 0' }}>💡 사용 목적:</Title>
+            <ul style={{ fontSize: '12px', margin: 0, paddingLeft: '16px' }}>
+              <li>복잡한 회원가입 폼의 상태 관리</li>
+              <li>다양한 검증 규칙 (길이, 패턴, 커스텀 검증)</li>
+              <li>실시간 유효성 검사 및 에러 표시</li>
+              <li>폼 제출 상태 관리</li>
+            </ul>
+          </Col>
+          <Col xs={24} md={12}>
+            <Title level={5} style={{ margin: '8px 0 4px 0' }}>🔍 적용된 검증:</Title>
+            <div style={{ backgroundColor: '#f6f6f6', padding: '8px', borderRadius: '4px', fontSize: '11px' }}>
+              <Text>• 사용자명: 3-20자 길이 제한</Text><br />
+              <Text>• 이메일: 정규식 패턴 검증</Text><br />
+              <Text>• 비밀번호: 복합 패턴 (대소문자+숫자)</Text><br />
+              <Text>• 확인: 커스텀 validator로 일치 검사</Text>
+            </div>
+          </Col>
+          <Col xs={24} md={12}>
+            <Title level={5} style={{ margin: '8px 0 4px 0' }}>⚡ 상태 추적:</Title>
+            <div style={{ backgroundColor: '#f6f6f6', padding: '8px', borderRadius: '4px', fontSize: '11px' }}>
+              <Text>• touched: 필드별 터치 상태</Text><br />
+              <Text>• errors: 실시간 에러 메시지</Text><br />
+              <Text>• isValid: 전체 폼 유효성</Text><br />
+              <Text>• isDirty: 변경 여부 추적</Text>
+            </div>
+          </Col>
+        </Row>
+      </Card>
+
       <Space direction="vertical" size="middle" style={{ width: '100%' }}>
         <Row gutter={[16, 16]}>
           <Col xs={24} md={12}>
@@ -516,11 +680,51 @@ const DynamicForm = () => {
 
   return (
     <Card title="동적 폼 생성 예제">
+      {/* useForm 사용 분석 */}
+      <Card 
+        size="small" 
+        style={{ backgroundColor: '#f0f8ff', border: '1px solid #91d5ff', marginBottom: '16px' }}
+        title="🔧 useForm 사용 분석 - 동적 폼"
+      >
+        <Row gutter={[16, 8]}>
+          <Col span={24}>
+            <Text strong>동적 초기값:</Text> <Text>formFields 배열을 기반으로 useMemo로 생성</Text>
+            <br />
+            <Text strong>동적 검증:</Text> <Text>필드 타입과 required 속성을 기반으로 규칙 생성</Text>
+          </Col>
+          <Col span={24}>
+            <Title level={5} style={{ margin: '8px 0 4px 0' }}>💡 사용 목적:</Title>
+            <ul style={{ fontSize: '12px', margin: 0, paddingLeft: '16px' }}>
+              <li>런타임에 폼 구조를 동적으로 변경</li>
+              <li>필드 추가/삭제/타입 변경 지원</li>
+              <li>동적 유효성 검사 규칙 생성</li>
+              <li>재사용 가능한 폼 시스템 구축</li>
+            </ul>
+          </Col>
+          <Col xs={24} md={12}>
+            <Title level={5} style={{ margin: '8px 0 4px 0' }}>🏗️ 동적 생성 로직:</Title>
+            <div style={{ backgroundColor: '#f6f6f6', padding: '8px', borderRadius: '4px', fontSize: '11px' }}>
+              <Text code>useMemo(() ={"> "}{"{"}formFields{"}"}, [formFields])</Text><br />
+              <Text type="secondary">→ 필드 변경 시 초기값과 검증 규칙 재생성</Text>
+            </div>
+          </Col>
+          <Col xs={24} md={12}>
+            <Title level={5} style={{ margin: '8px 0 4px 0' }}>🔄 동적 기능:</Title>
+            <div style={{ backgroundColor: '#f6f6f6', padding: '8px', borderRadius: '4px', fontSize: '11px' }}>
+              <Text>• 필드 타입 변경 (text, email, number, textarea)</Text><br />
+              <Text>• 필수/선택 속성 토글</Text><br />
+              <Text>• 필드 추가/삭제</Text><br />
+              <Text>• 조건부 렌더링</Text>
+            </div>
+          </Col>
+        </Row>
+      </Card>
+
       <Space direction="vertical" size="middle" style={{ width: '100%' }}>
         {/* 폼 필드 설정 */}
         <Card size="small" title="폼 필드 관리">
           <Space direction="vertical" style={{ width: '100%' }}>
-            {formFields.map((field, index) => (
+            {formFields.map((field) => (
               <div key={field.name} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                 <Text style={{ minWidth: 60 }}>{field.label}</Text>
                 <Select
@@ -612,6 +816,9 @@ const UseFormPage = () => {
       </div>
 
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
+        {/* useForm 기본 개념 */}
+        <UseFormConceptCard />
+
         {/* 1. 회원가입 폼 */}
         <RegistrationForm />
         
