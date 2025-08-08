@@ -668,6 +668,25 @@ const increment = () => {
         {/* 1. 기본 카운터 */}
         <Col xs={24} md={12} lg={8}>
           <Card title="📊 기본 카운터" size="small">
+            {/* useState 설명 */}
+            <div style={{ 
+              padding: '8px 12px', 
+              backgroundColor: '#f0f6ff', 
+              borderRadius: '6px', 
+              marginBottom: '12px',
+              border: '1px solid #d6e4ff'
+            }}>
+              <Text strong style={{ fontSize: '11px', color: '#1890ff', display: 'block', marginBottom: '4px' }}>
+                🎯 사용된 useState 패턴
+              </Text>
+              <Text style={{ fontSize: '10px', lineHeight: '1.4', color: '#666' }}>
+                <Text code style={{ fontSize: '10px' }}>const [count, setCount] = useState(0)</Text><br/>
+                • 숫자 타입 상태 관리<br/>
+                • 함수형 업데이트로 안전한 증감<br/>
+                • 이전 값에 의존한 계산 처리
+              </Text>
+            </div>
+
             <Space direction="vertical" align="center" style={{ width: '100%' }}>
               <Title level={1} style={{ margin: 0, color: '#1890ff' }}>{count}</Title>
               <Space>
@@ -682,6 +701,25 @@ const increment = () => {
         {/* 2. 문자열 상태 */}
         <Col xs={24} md={12} lg={8}>
           <Card title="📝 문자열 상태" size="small">
+            {/* useState 설명 */}
+            <div style={{ 
+              padding: '8px 12px', 
+              backgroundColor: '#f6ffed', 
+              borderRadius: '6px', 
+              marginBottom: '12px',
+              border: '1px solid #b7eb8f'
+            }}>
+              <Text strong style={{ fontSize: '11px', color: '#52c41a', display: 'block', marginBottom: '4px' }}>
+                🎯 사용된 useState 패턴
+              </Text>
+              <Text style={{ fontSize: '10px', lineHeight: '1.4', color: '#666' }}>
+                <Text code style={{ fontSize: '10px' }}>const [name, setName] = useState('')</Text><br/>
+                • 문자열 타입 상태 관리<br/>
+                • 입력값과 상태 동기화<br/>
+                • 조건부 렌더링 (name || '익명')
+              </Text>
+            </div>
+
             <Space direction="vertical" style={{ width: '100%' }}>
               <Input
                 placeholder="이름을 입력하세요"
@@ -703,6 +741,25 @@ const increment = () => {
         {/* 3. 불린 상태 */}
         <Col xs={24} md={12} lg={8}>
           <Card title="🔘 불린 상태" size="small">
+            {/* useState 설명 */}
+            <div style={{ 
+              padding: '8px 12px', 
+              backgroundColor: '#fff7e6', 
+              borderRadius: '6px', 
+              marginBottom: '12px',
+              border: '1px solid #ffd591'
+            }}>
+              <Text strong style={{ fontSize: '11px', color: '#fa8c16', display: 'block', marginBottom: '4px' }}>
+                🎯 사용된 useState 패턴
+              </Text>
+              <Text style={{ fontSize: '10px', lineHeight: '1.4', color: '#666' }}>
+                <Text code style={{ fontSize: '10px' }}>const [isVisible, setIsVisible] = useState(true)</Text><br/>
+                • 불린(boolean) 타입 상태 관리<br/>
+                • 토글 기능 구현<br/>
+                • 조건부 렌더링 제어
+              </Text>
+            </div>
+
             <Space direction="vertical" style={{ width: '100%' }}>
               <Space>
                 <Switch checked={isVisible} onChange={setIsVisible} />
@@ -735,6 +792,25 @@ const increment = () => {
         {/* 4. 배열 상태 */}
         <Col xs={24} md={12}>
           <Card title="📋 배열 상태" size="small">
+            {/* useState 설명 */}
+            <div style={{ 
+              padding: '8px 12px', 
+              backgroundColor: '#f9f0ff', 
+              borderRadius: '6px', 
+              marginBottom: '12px',
+              border: '1px solid #d3adf7'
+            }}>
+              <Text strong style={{ fontSize: '11px', color: '#722ed1', display: 'block', marginBottom: '4px' }}>
+                🎯 사용된 useState 패턴
+              </Text>
+              <Text style={{ fontSize: '10px', lineHeight: '1.4', color: '#666' }}>
+                <Text code style={{ fontSize: '10px' }}>const [items, setItems] = useState(['React', 'Vue'])</Text><br/>
+                • 배열 타입 상태 관리<br/>
+                • 스프레드 연산자로 불변성 유지<br/>
+                • filter 메서드로 항목 제거
+              </Text>
+            </div>
+
             <Space direction="vertical" style={{ width: '100%' }}>
               <Space.Compact style={{ width: '100%' }}>
                 <Input
@@ -793,6 +869,25 @@ const increment = () => {
         {/* 5. 객체 상태 */}
         <Col xs={24} md={12}>
           <Card title="👤 객체 상태" size="small">
+            {/* useState 설명 */}
+            <div style={{ 
+              padding: '8px 12px', 
+              backgroundColor: '#e6f7ff', 
+              borderRadius: '6px', 
+              marginBottom: '12px',
+              border: '1px solid #91d5ff'
+            }}>
+              <Text strong style={{ fontSize: '11px', color: '#1890ff', display: 'block', marginBottom: '4px' }}>
+                🎯 사용된 useState 패턴
+              </Text>
+              <Text style={{ fontSize: '10px', lineHeight: '1.4', color: '#666' }}>
+                <Text code style={{ fontSize: '10px' }}>const [user, setUser] = useState({`{name, age, city}`})</Text><br/>
+                • 객체 타입 상태 관리<br/>
+                • 스프레드 연산자로 불변성 유지<br/>
+                • 특정 속성만 업데이트
+              </Text>
+            </div>
+
             <Space direction="vertical" style={{ width: '100%' }}>
               <Input
                 addonBefore="이름"
@@ -849,6 +944,25 @@ const increment = () => {
         {/* 6. 폼 데이터 */}
         <Col xs={24} lg={12}>
           <Card title="📋 폼 데이터" size="small">
+            {/* useState 설명 */}
+            <div style={{ 
+              padding: '8px 12px', 
+              backgroundColor: '#f0f6ff', 
+              borderRadius: '6px', 
+              marginBottom: '12px',
+              border: '1px solid #d6e4ff'
+            }}>
+              <Text strong style={{ fontSize: '11px', color: '#1890ff', display: 'block', marginBottom: '4px' }}>
+                🎯 사용된 useState 패턴
+              </Text>
+              <Text style={{ fontSize: '10px', lineHeight: '1.4', color: '#666' }}>
+                <Text code style={{ fontSize: '10px' }}>const [formData, setFormData] = useState({`{email, password}`})</Text><br/>
+                • 복잡한 폼 상태 관리<br/>
+                • 동적 속성 업데이트 [field]: value<br/>
+                • 유효성 검사와 상태 연동
+              </Text>
+            </div>
+
             <Space direction="vertical" style={{ width: '100%' }}>
               <div>
                 <Input
@@ -911,6 +1025,25 @@ const increment = () => {
         {/* 7. 슬라이더 */}
         <Col xs={24} lg={12}>
           <Card title="🔊 슬라이더 상태" size="small">
+            {/* useState 설명 */}
+            <div style={{ 
+              padding: '8px 12px', 
+              backgroundColor: '#fff2e8', 
+              borderRadius: '6px', 
+              marginBottom: '12px',
+              border: '1px solid #ffbb96'
+            }}>
+              <Text strong style={{ fontSize: '11px', color: '#fa541c', display: 'block', marginBottom: '4px' }}>
+                🎯 사용된 useState 패턴
+              </Text>
+              <Text style={{ fontSize: '10px', lineHeight: '1.4', color: '#666' }}>
+                <Text code style={{ fontSize: '10px' }}>const [volume, setVolume] = useState(50)</Text><br/>
+                • 숫자 범위 상태 관리 (0-100)<br/>
+                • 슬라이더 컴포넌트와 상태 동기화<br/>
+                • 조건부 스타일링 (색상 변경)
+              </Text>
+            </div>
+
             <Space direction="vertical" style={{ width: '100%' }}>
               <div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
