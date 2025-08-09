@@ -139,7 +139,7 @@ const ExpensiveCalculationDemo = () => {
         </Row>
         
         <Alert
-          message="성능 최적화 포인트"
+          message="⚡ 성능 최적화 포인트"
           description="기타 값을 증가시켜도 useMemo로 메모이제이션된 계산은 다시 실행되지 않습니다. count나 multiplier를 변경했을 때만 재계산됩니다."
           type="info"
           showIcon
