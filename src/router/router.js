@@ -8,6 +8,7 @@ import UseStatePage from '../pages/hooks/useState.jsx'
 import UseEffectPage from '../pages/hooks/useEffect.jsx'
 import UseContextPage from '../pages/hooks/useContext.jsx'
 import UseCallbackPage from '../pages/hooks/useCallback.jsx'
+import UseParamsPage from '../pages/hooks/useParams.jsx'
 
 export const router = createBrowserRouter([
   {
@@ -45,6 +46,22 @@ export const router = createBrowserRouter([
       {
         path: 'hooks/useCallback',
         element: <UseCallbackPage />
+      },
+      {
+        path: 'hooks/useParams',
+        element: <UseParamsPage />
+      },
+      {
+        path: 'hooks/useParams/user/:id/:name',
+        element: <UseParamsPage />
+      },
+      {
+        path: 'hooks/useParams/shop/:category',
+        element: <UseParamsPage />
+      },
+      {
+        path: 'hooks/useParams/shop/:category/product/:productId',
+        element: <UseParamsPage />
       }
     ]
   }
