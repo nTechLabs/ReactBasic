@@ -111,6 +111,15 @@ const HooksIndexPage = () => {
       icon: <ApiOutlined />,
       color: '#fa541c',
       examples: ['프로그래매틱 네비게이션', '조건부 이동', '인증 가드', '폼 제출 후 리다이렉트', '히스토리 제어', '상태 전달', '동적 라우팅']
+    },
+    {
+      key: 'urlSearchParams',
+      title: 'URLSearchParams',
+      description: '쿼리 문자열을 파싱/조작하여 상태를 URL에 동기화하는 Web API 활용 패턴',
+      path: '/hooks/url-search-params',
+      icon: <ApiOutlined />,
+      color: '#0958d9',
+      examples: ['기본 파싱', '파라미터 편집', '필터/정렬', '실시간 검색', '다중 값 처리', '페이지네이션', 'push vs replace']
     }
   ]
 
@@ -315,6 +324,12 @@ const HooksIndexPage = () => {
             <div style={{ textAlign: 'center', padding: '8px' }}>
               <ApiOutlined style={{ fontSize: '24px', color: '#fa541c' }} />
               <div style={{ fontSize: '12px', marginTop: '4px' }}>useNavigate</div>
+            </div>
+          </Col>
+          <Col xs={12} sm={8} md={6} lg={4}>
+            <div style={{ textAlign: 'center', padding: '8px' }}>
+              <ApiOutlined style={{ fontSize: '24px', color: '#0958d9' }} />
+              <div style={{ fontSize: '12px', marginTop: '4px' }}>URLSearchParams</div>
             </div>
           </Col>
         </Row>

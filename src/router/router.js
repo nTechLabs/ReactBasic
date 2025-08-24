@@ -9,6 +9,7 @@ import UseEffectPage from '../pages/hooks/useEffect.jsx'
 import UseContextPage from '../pages/hooks/useContext.jsx'
 import UseCallbackPage from '../pages/hooks/useCallback.jsx'
 import UseParamsPage from '../pages/hooks/useParams.jsx'
+import URLSearchParamsPage from '../pages/hooks/URLSearchParams.jsx'
 
 export const router = createBrowserRouter([
   {
@@ -50,6 +51,14 @@ export const router = createBrowserRouter([
       {
         path: 'hooks/useParams',
         element: <UseParamsPage />
+      },
+      {
+        path: 'hooks/url-search-params',
+        element: <URLSearchParamsPage />
+      },
+      {
+        path: 'hooks/URLSearchParams', // alias
+        element: <URLSearchParamsPage />
       },
       {
         path: 'hooks/useParams/user/:id/:name',
