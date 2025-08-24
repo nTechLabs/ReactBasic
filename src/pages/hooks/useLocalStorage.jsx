@@ -22,6 +22,48 @@ const { Option } = Select
 const { TextArea } = Input
 
 // =====================================
+// 📋 useLocalStorage 기본 개념
+// =====================================
+/*
+┌─────────────────────────────────────────────────────────────────┐
+│                    useLocalStorage 동작 원리                      │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                │
+│  1️⃣ 초기화 단계                                                  │
+│  ┌─────────────┐     ┌─────────────┐     ┌─────────────┐        │
+│  │ 컴포넌트 마운트 │  →  │ 로컬스토리지   │  →  │ 상태 초기화    │        │
+│  │             │     │ 값 읽기      │     │             │        │
+│  └─────────────┘     └─────────────┘     └─────────────┘        │
+│                                                                │
+│  2️⃣ 값 변경 단계                                                  │
+│  ┌─────────────┐     ┌─────────────┐     ┌─────────────┐        │
+│  │ setValue 호출 │  →  │ 상태 업데이트  │  →  │ 로컬스토리지   │        │
+│  │             │     │             │     │ 저장        │        │
+│  └─────────────┘     └─────────────┘     └─────────────┘        │
+│                                                                │
+│  3️⃣ 동기화 단계                                                   │
+│  ┌─────────────┐     ┌─────────────┐     ┌─────────────┐        │
+│  │ 다른 탭 변경   │  →  │ storage 이벤트 │  →  │ 상태 자동 동기화 │        │
+│  │             │     │ 감지         │     │             │        │
+│  └─────────────┘     └─────────────┘     └─────────────┘        │
+│                                                                │
+├─────────────────────────────────────────────────────────────────┤
+│  🔧 주요 기능                                                    │
+│  • 자동 JSON 직렬화/역직렬화                                      │
+│  • SSR(서버사이드 렌더링) 환경 지원                                │
+│  • 다중 탭 간 실시간 동기화                                       │
+│  • 에러 처리 및 폴백 값 제공                                      │
+│  • 함수형 상태 업데이트 지원                                      │
+├─────────────────────────────────────────────────────────────────┤
+│  📊 사용 패턴                                                    │
+│  • 사용자 설정: 테마, 언어, 폰트 크기 등                          │
+│  • 폼 데이터: 임시 저장 및 복구                                   │
+│  • 앱 상태: 필터 조건, 정렬 기준 등                              │
+│  • 사용자 콘텐츠: 메모, 할일 목록, 임시 글 등                     │
+└─────────────────────────────────────────────────────────────────┘
+*/
+
+// =====================================
 // 커스텀 useLocalStorage 훅 구현
 // =====================================
 const useLocalStorage = (key, initialValue) => {
@@ -124,6 +166,23 @@ const useLocalStorage = (key, initialValue) => {
 // =====================================
 // 1. 사용자 설정 관리 예제
 // =====================================
+/*
+🔧 useLocalStorage 사용 분석:
+┌─────────────────────────────────────────────────────────────────┐
+│ 키: 'userSettings'                                              │
+│ 초기값: 객체 형태의 사용자 설정 정보                              │
+│ • username, theme, fontSize, notifications, language, autoSave   │
+│                                                                │
+│ 💡 사용 목적:                                                   │
+│ • 사용자 개인화 설정을 브라우저에 영구 저장                      │
+│ • 페이지 새로고침 후에도 설정 값 유지                           │
+│ • 각 설정 항목별 독립적인 업데이트 가능                         │
+│                                                                │
+│ 🔄 업데이트 패턴:                                               │
+│ setSettings(prev => ({"..."prev, [field]: newValue}))           │
+│ → 기존 설정을 유지하면서 특정 필드만 수정                        │
+└─────────────────────────────────────────────────────────────────┘
+*/
 const UserSettingsExample = () => {
   // 사용자 설정을 로컬스토리지에 저장
   const [settings, setSettings, removeSettings] = useLocalStorage('userSettings', {
@@ -167,6 +226,41 @@ const UserSettingsExample = () => {
 
   return (
     <Card title="사용자 설정 관리 (useLocalStorage)">
+      {/* useLocalStorage 사용 분석 */}
+      <Card 
+        size="small" 
+        style={{ backgroundColor: '#f0f8ff', border: '1px solid #91d5ff', marginBottom: '16px' }}
+        title="🔧 useLocalStorage 사용 분석"
+      >
+        <Row gutter={[16, 8]}>
+          <Col span={24}>
+            <Text strong>키:</Text> <Text code>'userSettings'</Text>
+            <br />
+            <Text strong>초기값:</Text> <Text>객체 형태의 사용자 설정 정보</Text>
+            <br />
+            <Text type="secondary" style={{ fontSize: '12px' }}>
+              • username, theme, fontSize, notifications, language, autoSave
+            </Text>
+          </Col>
+          <Col span={24}>
+            <Title level={5} style={{ margin: '8px 0 4px 0' }}>💡 사용 목적:</Title>
+            <ul style={{ fontSize: '12px', margin: 0, paddingLeft: '16px' }}>
+              <li>사용자 개인화 설정을 브라우저에 영구 저장</li>
+              <li>페이지 새로고침 후에도 설정 값 유지</li>
+              <li>각 설정 항목별 독립적인 업데이트 가능</li>
+            </ul>
+          </Col>
+          <Col span={24}>
+            <Title level={5} style={{ margin: '8px 0 4px 0' }}>🔄 업데이트 패턴:</Title>
+            <div style={{ backgroundColor: '#f6f6f6', padding: '8px', borderRadius: '4px', fontSize: '11px' }}>
+              <Text code>setSettings(prev ={">"} ({"{"}...prev, [field]: newValue{"}"}))</Text>
+              <br />
+              <Text type="secondary">→ 기존 설정을 유지하면서 특정 필드만 수정</Text>
+            </div>
+          </Col>
+        </Row>
+      </Card>
+      
       <Space direction="vertical" size="middle" style={{ width: '100%' }}>
         <Row gutter={[16, 16]}>
           <Col xs={24} md={12}>
@@ -283,6 +377,30 @@ const UserSettingsExample = () => {
 // =====================================
 // 2. 할일 목록 관리 예제
 // =====================================
+/*
+📝 useLocalStorage 사용 분석:
+┌─────────────────────────────────────────────────────────────────┐
+│ 1️⃣ todos 관리                                                   │
+│ 키: 'todoList' | 초기값: 빈 배열                                │
+│ • 할일 항목들의 배열을 로컬스토리지에 저장                       │
+│ • 각 할일은 id, text, completed, createdAt 속성 포함            │
+│                                                                │
+│ 2️⃣ filter 상태 관리                                             │  
+│ 키: 'todoFilter' | 초기값: 'all'                                │
+│ • 할일 목록의 필터 조건을 별도로 저장                           │
+│ • 'all', 'active', 'completed' 상태 유지                       │
+│                                                                │
+│ 💡 사용 목적:                                                   │
+│ • 할일 데이터와 UI 상태를 각각 독립적으로 저장                   │
+│ • 브라우저 재시작 후에도 할일 목록과 필터 상태 복원              │
+│ • 배열 메서드(map, filter)를 활용한 데이터 조작                 │
+│                                                                │
+│ 🔄 업데이트 패턴:                                               │
+│ • 추가: setTodos(prev => [...prev, newTodo])                   │
+│ • 수정: setTodos(prev => prev.map(todo => ...))                │
+│ • 삭제: setTodos(prev => prev.filter(todo => ...))             │
+└─────────────────────────────────────────────────────────────────┘
+*/
 const TodoListExample = () => {
   const [todos, setTodos, removeTodos] = useLocalStorage('todoList', [])
   const [newTodo, setNewTodo] = useState('')
@@ -336,6 +454,52 @@ const TodoListExample = () => {
 
   return (
     <Card title="할일 목록 관리 (LocalStorage)">
+      {/* useLocalStorage 사용 분석 */}
+      <Card 
+        size="small" 
+        style={{ backgroundColor: '#f0f8ff', border: '1px solid #91d5ff', marginBottom: '16px' }}
+        title="📝 useLocalStorage 사용 분석"
+      >
+        <Row gutter={[16, 8]}>
+          <Col xs={24} md={12}>
+            <Title level={5} style={{ margin: '8px 0 4px 0' }}>1️⃣ todos 관리</Title>
+            <Text strong>키:</Text> <Text code>'todoList'</Text> | <Text strong>초기값:</Text> <Text>빈 배열</Text>
+            <br />
+            <Text type="secondary" style={{ fontSize: '12px' }}>
+              • 할일 항목들의 배열을 로컬스토리지에 저장
+              <br />
+              • 각 할일은 id, text, completed, createdAt 속성 포함
+            </Text>
+          </Col>
+          <Col xs={24} md={12}>
+            <Title level={5} style={{ margin: '8px 0 4px 0' }}>2️⃣ filter 상태 관리</Title>
+            <Text strong>키:</Text> <Text code>'todoFilter'</Text> | <Text strong>초기값:</Text> <Text code>'all'</Text>
+            <br />
+            <Text type="secondary" style={{ fontSize: '12px' }}>
+              • 할일 목록의 필터 조건을 별도로 저장
+              <br />
+              • 'all', 'active', 'completed' 상태 유지
+            </Text>
+          </Col>
+          <Col span={24}>
+            <Title level={5} style={{ margin: '8px 0 4px 0' }}>💡 사용 목적:</Title>
+            <ul style={{ fontSize: '12px', margin: 0, paddingLeft: '16px' }}>
+              <li>할일 데이터와 UI 상태를 각각 독립적으로 저장</li>
+              <li>브라우저 재시작 후에도 할일 목록과 필터 상태 복원</li>
+              <li>배열 메서드(map, filter)를 활용한 데이터 조작</li>
+            </ul>
+          </Col>
+          <Col span={24}>
+            <Title level={5} style={{ margin: '8px 0 4px 0' }}>🔄 업데이트 패턴:</Title>
+            <div style={{ backgroundColor: '#f6f6f6', padding: '8px', borderRadius: '4px', fontSize: '11px' }}>
+              <Text>• 추가: </Text><Text code>setTodos(prev ={"> "}[...prev, newTodo])</Text><br />
+              <Text>• 수정: </Text><Text code>setTodos(prev ={"> "}prev.map(todo ={"> "}...))</Text><br />
+              <Text>• 삭제: </Text><Text code>setTodos(prev ={"> "}prev.filter(todo ={"> "}...))</Text>
+            </div>
+          </Col>
+        </Row>
+      </Card>
+
       <Space direction="vertical" size="middle" style={{ width: '100%' }}>
         {/* 할일 추가 */}
         <div style={{ display: 'flex', gap: 8 }}>
@@ -448,6 +612,37 @@ const TodoListExample = () => {
 // =====================================
 // 3. 사용자 노트 관리 예제
 // =====================================
+/*
+📝 useLocalStorage 사용 분석:
+┌─────────────────────────────────────────────────────────────────┐
+│ 키: 'userNotes' | 초기값: 빈 배열                               │
+│                                                                │
+│ 💡 사용 목적:                                                   │
+│ • 사용자가 작성한 노트를 영구적으로 로컬 저장                    │
+│ • 제목과 내용을 포함한 복잡한 데이터 구조 관리                   │
+│ • 생성/수정 시간 추적으로 데이터 이력 관리                      │
+│                                                                │
+│ 🏗️ 데이터 구조:                                                │
+│ {{"{"}}                                                          │
+│   id: timestamp,           // 고유 식별자                       │
+│   title: string,           // 노트 제목                         │
+│   content: string,         // 노트 내용                         │
+│   createdAt: string,       // 생성 시간                         │
+│   updatedAt: string        // 수정 시간                         │
+│ {"}"}                                                            │
+│                                                                │
+│ 🔄 CRUD 작업 패턴:                                              │
+│ • 생성: setNotes(prev => [newNote, ...prev])                   │
+│ • 수정: setNotes(prev => prev.map(note => ...))                │
+│ • 삭제: setNotes(prev => prev.filter(note => ...))             │
+│ • 조회: 최신 노트가 먼저 오도록 배열 순서 관리                   │
+│                                                                │
+│ 🎯 사용자 경험 개선:                                             │
+│ • 수정 모드와 생성 모드 UI 통합                                  │
+│ • 미리보기로 긴 내용 요약 표시                                   │
+│ • 실시간 저장으로 데이터 손실 방지                              │
+└─────────────────────────────────────────────────────────────────┘
+*/
 const NotesExample = () => {
   const [notes, setNotes, removeNotes] = useLocalStorage('userNotes', [])
   const [currentNote, setCurrentNote] = useState('')
@@ -507,6 +702,56 @@ const NotesExample = () => {
 
   return (
     <Card title="사용자 노트 관리">
+      {/* useLocalStorage 사용 분석 */}
+      <Card 
+        size="small" 
+        style={{ backgroundColor: '#f0f8ff', border: '1px solid #91d5ff', marginBottom: '16px' }}
+        title="📝 useLocalStorage 사용 분석"
+      >
+        <Row gutter={[16, 8]}>
+          <Col span={24}>
+            <Text strong>키:</Text> <Text code>'userNotes'</Text> | <Text strong>초기값:</Text> <Text>빈 배열</Text>
+          </Col>
+          <Col span={24}>
+            <Title level={5} style={{ margin: '8px 0 4px 0' }}>💡 사용 목적:</Title>
+            <ul style={{ fontSize: '12px', margin: 0, paddingLeft: '16px' }}>
+              <li>사용자가 작성한 노트를 영구적으로 로컬 저장</li>
+              <li>제목과 내용을 포함한 복잡한 데이터 구조 관리</li>
+              <li>생성/수정 시간 추적으로 데이터 이력 관리</li>
+            </ul>
+          </Col>
+          <Col xs={24} md={12}>
+            <Title level={5} style={{ margin: '8px 0 4px 0' }}>🏗️ 데이터 구조:</Title>
+            <div style={{ backgroundColor: '#f6f6f6', padding: '8px', borderRadius: '4px', fontSize: '11px' }}>
+              <Text code>{`{
+  id: timestamp,           // 고유 식별자
+  title: string,           // 노트 제목
+  content: string,         // 노트 내용
+  createdAt: string,       // 생성 시간
+  updatedAt: string        // 수정 시간
+}`}</Text>
+            </div>
+          </Col>
+          <Col xs={24} md={12}>
+            <Title level={5} style={{ margin: '8px 0 4px 0' }}>🔄 CRUD 작업 패턴:</Title>
+            <div style={{ backgroundColor: '#f6f6f6', padding: '8px', borderRadius: '4px', fontSize: '11px' }}>
+              <Text>• 생성: </Text><Text code>setNotes(prev ={"> "}[newNote, ...prev])</Text><br />
+              <Text>• 수정: </Text><Text code>setNotes(prev ={"> "}prev.map(note ={"> "}...))</Text><br />
+              <Text>• 삭제: </Text><Text code>setNotes(prev ={"> "}prev.filter(note ={"> "}...))</Text><br />
+              <Text>• 조회: </Text><Text type="secondary">최신 노트가 먼저 오도록 배열 순서 관리</Text>
+            </div>
+          </Col>
+          <Col span={24}>
+            <Title level={5} style={{ margin: '8px 0 4px 0' }}>🎯 사용자 경험 개선:</Title>
+            <ul style={{ fontSize: '12px', margin: 0, paddingLeft: '16px' }}>
+              <li>수정 모드와 생성 모드 UI 통합</li>
+              <li>미리보기로 긴 내용 요약 표시</li>
+              <li>실시간 저장으로 데이터 손실 방지</li>
+            </ul>
+          </Col>
+        </Row>
+      </Card>
+
       <Space direction="vertical" size="middle" style={{ width: '100%' }}>
         <Row gutter={[16, 16]}>
           <Col xs={24} md={12}>
@@ -639,6 +884,74 @@ const UseLocalStoragePage = () => {
       </div>
 
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
+        {/* useLocalStorage 기본 개념 */}
+        <Card 
+          title="📋 useLocalStorage 기본 개념" 
+          style={{ backgroundColor: '#f9f9f9', border: '2px solid #1890ff' }}
+        >
+          <Row gutter={[16, 16]}>
+            <Col span={24}>
+              <Title level={4} style={{ textAlign: 'center', margin: '0 0 16px 0' }}>
+                useLocalStorage 동작 원리
+              </Title>
+            </Col>
+            
+            <Col xs={24} md={8}>
+              <Card size="small" style={{ height: '100%' }}>
+                <Title level={5}>1️⃣ 초기화 단계</Title>
+                <div style={{ textAlign: 'center', margin: '16px 0' }}>
+                  <div style={{ fontSize: '12px', color: '#666' }}>
+                    컴포넌트 마운트 → 로컬스토리지 값 읽기 → 상태 초기화
+                  </div>
+                </div>
+              </Card>
+            </Col>
+            
+            <Col xs={24} md={8}>
+              <Card size="small" style={{ height: '100%' }}>
+                <Title level={5}>2️⃣ 값 변경 단계</Title>
+                <div style={{ textAlign: 'center', margin: '16px 0' }}>
+                  <div style={{ fontSize: '12px', color: '#666' }}>
+                    setValue 호출 → 상태 업데이트 → 로컬스토리지 저장
+                  </div>
+                </div>
+              </Card>
+            </Col>
+            
+            <Col xs={24} md={8}>
+              <Card size="small" style={{ height: '100%' }}>
+                <Title level={5}>3️⃣ 동기화 단계</Title>
+                <div style={{ textAlign: 'center', margin: '16px 0' }}>
+                  <div style={{ fontSize: '12px', color: '#666' }}>
+                    다른 탭 변경 → storage 이벤트 감지 → 상태 자동 동기화
+                  </div>
+                </div>
+              </Card>
+            </Col>
+            
+            <Col xs={24} md={12}>
+              <Title level={5}>🔧 주요 기능</Title>
+              <ul style={{ fontSize: '13px', margin: 0, paddingLeft: '16px' }}>
+                <li>자동 JSON 직렬화/역직렬화</li>
+                <li>SSR(서버사이드 렌더링) 환경 지원</li>
+                <li>다중 탭 간 실시간 동기화</li>
+                <li>에러 처리 및 폴백 값 제공</li>
+                <li>함수형 상태 업데이트 지원</li>
+              </ul>
+            </Col>
+            
+            <Col xs={24} md={12}>
+              <Title level={5}>📊 사용 패턴</Title>
+              <ul style={{ fontSize: '13px', margin: 0, paddingLeft: '16px' }}>
+                <li>사용자 설정: 테마, 언어, 폰트 크기 등</li>
+                <li>폼 데이터: 임시 저장 및 복구</li>
+                <li>앱 상태: 필터 조건, 정렬 기준 등</li>
+                <li>사용자 콘텐츠: 메모, 할일 목록, 임시 글 등</li>
+              </ul>
+            </Col>
+          </Row>
+        </Card>
+
         {/* 1. 사용자 설정 관리 */}
         <UserSettingsExample />
         

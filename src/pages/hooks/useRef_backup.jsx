@@ -25,6 +25,7 @@ const { Title, Paragraph, Text } = Typography
 const DOMAccessDemo = () => {
   const inputRef = useRef(null)
   const textareaRef = useRef(null)
+  const videoRef = useRef(null)
   const [inputValue, setInputValue] = useState('')
   const [textareaValue, setTextareaValue] = useState('')
 
@@ -59,31 +60,6 @@ const DOMAccessDemo = () => {
   return (
     <Card title="DOM 요소 직접 접근 (useRef)">
       <Space direction="vertical" size="middle" style={{ width: '100%' }}>
-        {/* useRef 패턴 설명 */}
-        <Alert
-          message="🎯 useRef 패턴: DOM 직접 제어"
-          description={
-            <div>
-              <Text strong style={{ color: '#fa541c' }}>
-                이 예제에서 useRef가 사용되는 방식:
-              </Text>
-              <ul style={{ marginTop: '8px', marginBottom: '8px' }}>
-                <li><Text code>inputRef = useRef(null)</Text> - input DOM 요소를 참조</li>
-                <li><Text code>textareaRef = useRef(null)</Text> - textarea DOM 요소를 참조</li>
-                <li><Text code>inputRef.current.focus()</Text> - DOM API 직접 호출</li>
-                <li><Text code>textareaRef.current.select()</Text> - 텍스트 선택 기능</li>
-              </ul>
-              <Text type="secondary" style={{ fontSize: '12px' }}>
-                💡 핵심: useState로는 불가능한 DOM 메서드 직접 호출이 가능합니다. 
-                focus(), select(), scroll() 등의 브라우저 API를 React에서 안전하게 사용할 수 있습니다.
-              </Text>
-            </div>
-          }
-          type="info"
-          showIcon
-          style={{ backgroundColor: '#fff7e6', border: '1px solid #fa541c' }}
-        />
-        
         <Row gutter={[16, 16]}>
           <Col xs={24} md={12}>
             <Card size="small" title="Input 요소 제어">
@@ -188,31 +164,6 @@ const PreviousValueDemo = () => {
   return (
     <Card title="이전 값 저장 및 비교 (useRef)">
       <Space direction="vertical" size="middle" style={{ width: '100%' }}>
-        {/* useRef 패턴 설명 */}
-        <Alert
-          message="💾 useRef 패턴: 이전 값 추적과 비교"
-          description={
-            <div>
-              <Text strong style={{ color: '#1890ff' }}>
-                이 예제에서 useRef가 사용되는 방식:
-              </Text>
-              <ul style={{ marginTop: '8px', marginBottom: '8px' }}>
-                <li><Text code>prevCountRef = useRef()</Text> - 이전 카운트 값 저장</li>
-                <li><Text code>prevNameRef = useRef()</Text> - 이전 이름 값 저장</li>
-                <li><Text code>{"useEffect(() => prevCountRef.current = count, [count])"}</Text> - 값 변경 추적</li>
-                <li><Text code>count - prevCountRef.current</Text> - 변화량 계산</li>
-              </ul>
-              <Text type="secondary" style={{ fontSize: '12px' }}>
-                💡 핵심: useRef는 리렌더링 간에 값을 유지하므로 이전 상태와 현재 상태를 비교할 수 있습니다. 
-                변화량 계산, 애니메이션, 성능 최적화에 매우 유용한 패턴입니다.
-              </Text>
-            </div>
-          }
-          type="info"
-          showIcon
-          style={{ backgroundColor: '#e6f7ff', border: '1px solid #1890ff' }}
-        />
-        
         <Row gutter={[16, 16]}>
           <Col xs={24} md={12}>
             <Card size="small" title="카운터 이전 값 추적">
@@ -387,32 +338,6 @@ const TimerDemo = () => {
   return (
     <Card title="타이머 및 인터벌 관리 (useRef)">
       <Space direction="vertical" size="middle" style={{ width: '100%' }}>
-        {/* useRef 패턴 설명 */}
-        <Alert
-          message="⏱️ useRef 패턴: 타이머 ID 관리와 렌더링 최적화"
-          description={
-            <div>
-              <Text strong style={{ color: '#fa8c16' }}>
-                이 예제에서 useRef가 사용되는 방식:
-              </Text>
-              <ul style={{ marginTop: '8px', marginBottom: '8px' }}>
-                <li><Text code>intervalRef = useRef(null)</Text> - setInterval ID 저장</li>
-                <li><Text code>renderCountRef = useRef(0)</Text> - 렌더링 횟수 추적</li>
-                <li><Text code>intervalRef.current = setInterval(...)</Text> - 타이머 ID 저장</li>
-                <li><Text code>clearInterval(intervalRef.current)</Text> - 타이머 정리</li>
-                <li><Text code>renderCountRef.current++</Text> - 리렌더링 없는 카운팅</li>
-              </ul>
-              <Text type="secondary" style={{ fontSize: '12px' }}>
-                💡 핵심: useRef는 타이머 ID를 안전하게 보관하여 메모리 누수를 방지합니다. 
-                또한 렌더링 횟수처럼 화면 업데이트가 필요 없는 값은 useRef로 관리하여 성능을 최적화할 수 있습니다.
-              </Text>
-            </div>
-          }
-          type="warning"
-          showIcon
-          style={{ backgroundColor: '#fff7e6', border: '1px solid #fa8c16' }}
-        />
-        
         <Row gutter={[16, 16]}>
           <Col xs={24} md={12}>
             <Card size="small" title="스톱워치">
@@ -577,32 +502,6 @@ const ScrollTrackingDemo = () => {
   return (
     <Card title="스크롤 위치 추적 및 제어 (useRef)">
       <Space direction="vertical" size="middle" style={{ width: '100%' }}>
-        {/* useRef 패턴 설명 */}
-        <Alert
-          message="📏 useRef 패턴: 스크롤 컨테이너 제어와 위치 추적"
-          description={
-            <div>
-              <Text strong style={{ color: '#52c41a' }}>
-                이 예제에서 useRef가 사용되는 방식:
-              </Text>
-              <ul style={{ marginTop: '8px', marginBottom: '8px' }}>
-                <li><Text code>scrollContainerRef = useRef(null)</Text> - 스크롤 컨테이너 참조</li>
-                <li><Text code>scrollContainerRef.current.scrollTop</Text> - 스크롤 위치 읽기</li>
-                <li><Text code>scrollContainerRef.current.scrollTo()</Text> - 스크롤 위치 제어</li>
-                <li><Text code>onScroll={`{handleScroll}`}</Text> - 스크롤 이벤트 처리</li>
-                <li><Text code>scrollHeight, clientHeight</Text> - 스크롤 정보 계산</li>
-              </ul>
-              <Text type="secondary" style={{ fontSize: '12px' }}>
-                💡 핵심: useRef로 스크롤 컨테이너에 접근하여 위치 정보를 읽고 제어할 수 있습니다. 
-                무한 스크롤, 스크롤 위치 저장/복원, 스크롤 기반 애니메이션 등에 활용됩니다.
-              </Text>
-            </div>
-          }
-          type="success"
-          showIcon
-          style={{ backgroundColor: '#f6ffed', border: '1px solid #52c41a' }}
-        />
-        
         <Row gutter={[16, 16]}>
           <Col xs={24} md={8}>
             <Card size="small" title="스크롤 정보">

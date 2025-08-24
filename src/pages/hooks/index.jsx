@@ -93,6 +93,24 @@ const HooksIndexPage = () => {
       icon: <ApiOutlined />,
       color: '#1890ff',
       examples: ['데이터 저장', '사용자 설정', '할일 목록', '노트 관리', '자동 동기화', '에러 처리', 'SSR 지원']
+    },
+    {
+      key: 'useParams',
+      title: 'useParams Hook',
+      description: 'React Router의 URL 파라미터를 추출하고 활용하는 React Hook',
+      path: '/hooks/useParams',
+      icon: <CodeOutlined />,
+      color: '#13c2c2',
+      examples: ['URL 파라미터 추출', '사용자 프로필', '다중 파라미터', '중첩 라우팅', '동적 페이지', '파라미터 검증', 'SEO 친화적 URL']
+    },
+    {
+      key: 'useNavigate',
+      title: 'useNavigate Hook',
+      description: 'React Router의 프로그래매틱 네비게이션을 제공하는 React Hook',
+      path: '/hooks/useNavigate',
+      icon: <ApiOutlined />,
+      color: '#fa541c',
+      examples: ['프로그래매틱 네비게이션', '조건부 이동', '인증 가드', '폼 제출 후 리다이렉트', '히스토리 제어', '상태 전달', '동적 라우팅']
     }
   ]
 
@@ -285,6 +303,18 @@ const HooksIndexPage = () => {
             <div style={{ textAlign: 'center', padding: '8px' }}>
               <ApiOutlined style={{ fontSize: '24px', color: '#1890ff' }} />
               <div style={{ fontSize: '12px', marginTop: '4px' }}>useLocalStorage</div>
+            </div>
+          </Col>
+          <Col xs={12} sm={8} md={6} lg={4}>
+            <div style={{ textAlign: 'center', padding: '8px' }}>
+              <CodeOutlined style={{ fontSize: '24px', color: '#13c2c2' }} />
+              <div style={{ fontSize: '12px', marginTop: '4px' }}>useParams</div>
+            </div>
+          </Col>
+          <Col xs={12} sm={8} md={6} lg={4}>
+            <div style={{ textAlign: 'center', padding: '8px' }}>
+              <ApiOutlined style={{ fontSize: '24px', color: '#fa541c' }} />
+              <div style={{ fontSize: '12px', marginTop: '4px' }}>useNavigate</div>
             </div>
           </Col>
         </Row>

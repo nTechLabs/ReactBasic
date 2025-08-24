@@ -10,6 +10,7 @@ import UseStatePage from '../pages/hooks/useState.jsx'
 import UseEffectPage from '../pages/hooks/useEffect.jsx'
 import UseContextPage from '../pages/hooks/useContext.jsx'
 import UseCallbackPage from '../pages/hooks/useCallback.jsx'
+import UseParamsPage from '../pages/hooks/useParams.jsx'
 
 const { Header, Content, Footer } = Layout
 const { Title } = Typography
@@ -92,6 +93,10 @@ const AppRouters = () => {
           <Route path="/hooks/useEffect" element={<UseEffectPage />} />
           <Route path="/hooks/useContext" element={<UseContextPage />} />
           <Route path="/hooks/useCallback" element={<UseCallbackPage />} />
+          <Route path="/hooks/useParams" element={<UseParamsPage />} />
+          <Route path="/hooks/useParams/user/:id/:name" element={<UseParamsPage />} />
+          <Route path="/hooks/useParams/shop/:category" element={<UseParamsPage />} />
+          <Route path="/hooks/useParams/shop/:category/product/:productId" element={<UseParamsPage />} />
           <Route path="/about" element={<AboutPage />} />
         </Routes>
       </AppLayout>
