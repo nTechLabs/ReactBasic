@@ -77,6 +77,15 @@ const HooksIndexPage = () => {
       examples: ['DOM 요소 접근', '이전 값 저장', '타이머 관리', '스크롤 추적', 'Focus 제어', '렌더링 최적화', '값 참조 유지']
     },
     {
+      key: 'useLocation',
+      title: 'useLocation Hook',
+      description: '현재 URL 경로, 해시, 쿼리 등을 제공하는 React Router Hook',
+      path: '/hooks/useLocation',
+      icon: <ApiOutlined />,
+      color: '#13c2c2',
+      examples: ['현재 경로 표시', '쿼리 파라미터 파싱', '탭 활성화', '히스토리 감시', 'Breadcrumb 생성', '조건부 렌더링', '로그 추적']
+    },
+    {
       key: 'useLocalStorage',
       title: 'useLocalStorage Hook',
       description: '로컬스토리지를 활용한 데이터 저장과 관리를 위한 커스텀 React Hook',
@@ -264,6 +273,12 @@ const HooksIndexPage = () => {
             <div style={{ textAlign: 'center', padding: '8px' }}>
               <FunctionOutlined style={{ fontSize: '24px', color: '#fa541c' }} />
               <div style={{ fontSize: '12px', marginTop: '4px' }}>useRef</div>
+            </div>
+          </Col>
+          <Col xs={12} sm={8} md={6} lg={4}>
+            <div style={{ textAlign: 'center', padding: '8px' }}>
+              <ApiOutlined style={{ fontSize: '24px', color: '#13c2c2' }} />
+              <div style={{ fontSize: '12px', marginTop: '4px' }}>useLocation</div>
             </div>
           </Col>
           <Col xs={12} sm={8} md={6} lg={4}>

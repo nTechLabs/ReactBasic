@@ -15,6 +15,7 @@ import UseMemoPage from '../pages/hooks/useMemo'
 import UseFormPage from '../pages/hooks/useForm'
 import UseRefPage from '../pages/hooks/useRef'
 import UseLocalStoragePage from '../pages/hooks/useLocalStorage'
+import UseLocationPage from '../pages/hooks/useLocation'
 
 const { Header, Content, Footer } = Layout
 const { Title } = Typography
@@ -106,6 +107,7 @@ const AppRouters = () => {
           <Route path="/hooks/useMemo" element={<UseMemoPage />} />
           <Route path="/hooks/useForm" element={<UseFormPage />} />
           <Route path="/hooks/useRef" element={<UseRefPage />} />
+          <Route path="/hooks/useLocation" element={<UseLocationPage />} />
           <Route path="/hooks/useLocalStorage" element={<UseLocalStoragePage />} />
           <Route path="/about" element={<AboutPage />} />
         </Routes>
