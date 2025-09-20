@@ -1,0 +1,216 @@
+/* Exams 페이지 공통 스타일 */
+
+/* 전체 컨테이너 */
+.exams-container {
+  width: 100%;
+}
+
+/* 헤더 섹션 */
+.exams-header {
+  text-align: center;
+}
+
+.exams-title-icon {
+  color: #722ed1;
+}
+
+.exams-description {
+  max-width: 600px;
+  margin: 0 auto;
+  color: #666;
+}
+
+.exams-alert {
+  margin-bottom: 24px;
+}
+
+/* 시험 카드 */
+.exam-card {
+  height: 100%;
+  border-width: 2px;
+  border-color: var(--exam-color, #1890ff);
+}
+
+.exam-card-cover {
+  padding: 24px;
+  text-align: center;
+  background: var(
+    --exam-gradient,
+    linear-gradient(135deg, #1890ff20, #1890ff10)
+  );
+}
+
+.exam-card-icon {
+  font-size: 48px;
+  color: var(--exam-color, #1890ff);
+}
+
+.exam-card-button {
+  background-color: var(--exam-color, #1890ff);
+  border-color: var(--exam-color, #1890ff);
+}
+
+/* 시험 메타 정보 */
+.exam-description-text {
+  font-size: 12px;
+}
+
+.exam-topics-label {
+  font-size: 11px;
+  color: #666;
+}
+
+.exam-topics-container {
+  margin-top: 4px;
+}
+
+.exam-topic-tag {
+  font-size: 10px;
+  margin: 2px;
+}
+
+/* 곧 추가될 시험들 */
+.upcoming-exams-card {
+  background: #f6f6f6;
+  border: 1px dashed #d9d9d9;
+}
+
+.upcoming-exam-item {
+  text-align: center;
+  padding: 8px;
+  opacity: 0.6;
+}
+
+.upcoming-exam-icon {
+  font-size: 24px;
+  color: var(--upcoming-color, #666);
+}
+
+.upcoming-exam-name {
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+/* useState 시험 페이지 스타일 */
+
+/* 시험 제목 아이콘 */
+.useState-title-icon {
+  color: #52c41a;
+}
+
+.useState-description {
+  max-width: 600px;
+  margin: 0 auto;
+  color: #666;
+}
+
+/* 진행도 카드 */
+.progress-card {
+  max-width: 400px;
+  margin: 16px auto;
+}
+
+.progress-bar {
+  width: 150px;
+}
+
+/* 시험 카드 높이 통일 */
+.exam-test-card {
+  height: 100%;
+}
+
+/* 카운터 디스플레이 */
+.counter-display {
+  text-align: center;
+  padding: 20px;
+  background: #f6f6f6;
+  border-radius: 8px;
+}
+
+.counter-title {
+  margin: 0;
+}
+
+.counter-buttons {
+  width: 100%;
+  justify-content: center;
+}
+
+/* 입력 미리보기 */
+.input-preview {
+  padding: 16px;
+  background: #f6f6f6;
+  border-radius: 8px;
+  text-align: center;
+}
+
+/* 아이템 컨테이너 */
+.items-container {
+  min-height: 100px;
+  padding: 12px;
+  background: #f6f6f6;
+  border-radius: 8px;
+}
+
+.items-input-container {
+  width: 100%;
+}
+
+/* 사용자 정보 디스플레이 */
+.user-info-display {
+  padding: 12px;
+  background: #f6f6f6;
+  border-radius: 8px;
+}
+
+/* 토글 버튼 컨테이너 */
+.toggle-button-container {
+  text-align: center;
+}
+
+/* 성공 메시지 */
+.success-message {
+  padding: 24px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  text-align: center;
+  color: white;
+}
+
+.success-title {
+  color: white;
+  margin: 0;
+}
+
+.success-paragraph {
+  color: white;
+  margin: 8px 0 0 0;
+}
+
+/* 제어 패널 */
+.control-panel {
+  background: #f6f6f6;
+}
+
+.control-buttons {
+  width: 100%;
+  justify-content: center;
+}
+
+/* 학습 가이드 */
+.guide-code-text {
+  font-size: 11px;
+}
+
+/* 공통 유틸리티 클래스 */
+.full-width {
+  width: 100%;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.margin-auto {
+  margin: 0 auto;
+}
