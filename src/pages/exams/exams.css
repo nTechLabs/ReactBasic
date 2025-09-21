@@ -34,10 +34,7 @@
 .exam-card-cover {
   padding: 24px;
   text-align: center;
-  background: var(
-    --exam-gradient,
-    linear-gradient(135deg, #1890ff20, #1890ff10)
-  );
+  background: var(--exam-gradient, linear-gradient(135deg, #1890ff20, #1890ff10));
 }
 
 .exam-card-icon {

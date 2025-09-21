@@ -1,8 +1,8 @@
-import { Card, Button, Space, Typography, Row, Col } from 'antd'
-import { useNavigate } from 'react-router-dom'
-import { 
-  HomeOutlined, 
-  UnorderedListOutlined, 
+import { Card, Button, Space, Typography, Row, Col } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import {
+  HomeOutlined,
+  UnorderedListOutlined,
   InfoCircleOutlined,
   RocketOutlined,
   ArrowRightOutlined,
@@ -12,13 +12,13 @@ import {
   BgColorsOutlined,
   DatabaseOutlined,
   GlobalOutlined,
-  ShareAltOutlined
-} from '@ant-design/icons'
+  ShareAltOutlined,
+} from '@ant-design/icons';
 
-const { Title, Paragraph } = Typography
+const { Title, Paragraph } = Typography;
 
 const IndexPage = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const pages = [
     {
@@ -27,7 +27,7 @@ const IndexPage = () => {
       description: 'Zustand를 사용한 상태 관리 예제',
       path: '/counter',
       icon: <HomeOutlined />,
-      color: '#1890ff'
+      color: '#1890ff',
     },
     {
       key: 'todos',
@@ -35,7 +35,7 @@ const IndexPage = () => {
       description: 'React Query를 사용한 데이터 페칭 예제',
       path: '/todos',
       icon: <UnorderedListOutlined />,
-      color: '#52c41a'
+      color: '#52c41a',
     },
     {
       key: 'hooks',
@@ -43,7 +43,7 @@ const IndexPage = () => {
       description: 'React Hooks 사용법과 예제 모음',
       path: '/hooks',
       icon: <ApiOutlined />,
-      color: '#fa8c16'
+      color: '#fa8c16',
     },
     {
       key: 'about',
@@ -51,19 +51,19 @@ const IndexPage = () => {
       description: '기술 스택 및 프로젝트 정보',
       path: '/about',
       icon: <InfoCircleOutlined />,
-      color: '#722ed1'
-    }
-  ]
+      color: '#722ed1',
+    },
+  ];
 
   const handleNavigate = (path) => {
-    navigate(path)
-  }
+    navigate(path);
+  };
 
   return (
     <Space direction="vertical" size="large" style={{ width: '100%' }}>
       <div style={{ textAlign: 'center', marginBottom: '32px' }}>
         <Title level={1}>
-          <RocketOutlined style={{ color: '#1890ff' }} /> 
+          <RocketOutlined style={{ color: '#1890ff' }} />
           React 프로젝트 대시보드
         </Title>
         <Paragraph style={{ fontSize: '16px', color: '#666' }}>
@@ -76,33 +76,29 @@ const IndexPage = () => {
           <Col xs={24} sm={12} lg={6} key={page.key}>
             <Card
               hoverable
-              style={{ 
+              style={{
                 height: '200px',
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'center'
+                justifyContent: 'center',
               }}
-              bodyStyle={{ 
+              bodyStyle={{
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
                 alignItems: 'center',
                 height: '100%',
-                textAlign: 'center'
+                textAlign: 'center',
               }}
             >
               <Space direction="vertical" size="middle" align="center">
-                <div style={{ fontSize: '48px', color: page.color }}>
-                  {page.icon}
-                </div>
+                <div style={{ fontSize: '48px', color: page.color }}>{page.icon}</div>
                 <Title level={4} style={{ margin: 0 }}>
                   {page.title}
                 </Title>
-                <Paragraph style={{ margin: 0, color: '#666' }}>
-                  {page.description}
-                </Paragraph>
-                <Button 
-                  type="primary" 
+                <Paragraph style={{ margin: 0, color: '#666' }}>{page.description}</Paragraph>
+                <Button
+                  type="primary"
                   size="large"
                   icon={<ArrowRightOutlined />}
                   onClick={() => handleNavigate(page.path)}
@@ -122,96 +118,96 @@ const IndexPage = () => {
         </Title>
         <Row gutter={[16, 16]} justify="center">
           <Col>
-            <Button 
-              type="default" 
+            <Button
+              type="default"
               size="large"
               icon={<ApiOutlined style={{ color: '#61DAFB', fontSize: '18px' }} />}
               onClick={() => window.open('https://react.dev/', '_blank')}
-              style={{ 
+              style={{
                 cursor: 'pointer',
                 height: '48px',
                 fontSize: '16px',
-                padding: '0 20px'
+                padding: '0 20px',
               }}
             >
               React 19.1.0
             </Button>
           </Col>
           <Col>
-            <Button 
-              type="default" 
+            <Button
+              type="default"
               size="large"
               icon={<ThunderboltOutlined style={{ color: '#646CFF', fontSize: '18px' }} />}
               onClick={() => window.open('https://vitejs.dev/', '_blank')}
-              style={{ 
+              style={{
                 cursor: 'pointer',
                 height: '48px',
                 fontSize: '16px',
-                padding: '0 20px'
+                padding: '0 20px',
               }}
             >
               Vite
             </Button>
           </Col>
           <Col>
-            <Button 
-              type="default" 
+            <Button
+              type="default"
               size="large"
               icon={<BgColorsOutlined style={{ color: '#1890ff', fontSize: '18px' }} />}
               onClick={() => window.open('https://ant.design/', '_blank')}
-              style={{ 
+              style={{
                 cursor: 'pointer',
                 height: '48px',
                 fontSize: '16px',
-                padding: '0 20px'
+                padding: '0 20px',
               }}
             >
               Ant Design
             </Button>
           </Col>
           <Col>
-            <Button 
-              type="default" 
+            <Button
+              type="default"
               size="large"
               icon={<DatabaseOutlined style={{ color: '#FF4154', fontSize: '18px' }} />}
               onClick={() => window.open('https://tanstack.com/query/latest', '_blank')}
-              style={{ 
+              style={{
                 cursor: 'pointer',
                 height: '48px',
                 fontSize: '16px',
-                padding: '0 20px'
+                padding: '0 20px',
               }}
             >
               React Query
             </Button>
           </Col>
           <Col>
-            <Button 
-              type="default" 
+            <Button
+              type="default"
               size="large"
               icon={<GlobalOutlined style={{ color: '#2D3748', fontSize: '18px' }} />}
               onClick={() => window.open('https://zustand.docs.pmnd.rs/', '_blank')}
-              style={{ 
+              style={{
                 cursor: 'pointer',
                 height: '48px',
                 fontSize: '16px',
-                padding: '0 20px'
+                padding: '0 20px',
               }}
             >
               Zustand
             </Button>
           </Col>
           <Col>
-            <Button 
-              type="default" 
+            <Button
+              type="default"
               size="large"
               icon={<ShareAltOutlined style={{ color: '#CA4245', fontSize: '18px' }} />}
               onClick={() => window.open('https://reactrouter.com/', '_blank')}
-              style={{ 
+              style={{
                 cursor: 'pointer',
                 height: '48px',
                 fontSize: '16px',
-                padding: '0 20px'
+                padding: '0 20px',
               }}
             >
               React Router
@@ -220,7 +216,7 @@ const IndexPage = () => {
         </Row>
       </Card>
     </Space>
-  )
-}
+  );
+};
 
-export default IndexPage
+export default IndexPage;

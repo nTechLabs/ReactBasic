@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { Typography, notification } from "antd";
+import { useState } from 'react';
+import { Typography, notification } from 'antd';
 
-import "./exams.css";
+import './exams.css';
 
 const { Title } = Typography;
 
@@ -11,8 +11,8 @@ const UseStateExamPage = () => {
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   const [Cnt, setCnt] = useState(0);
-  const [Names, setNames] = useState(["홍길동", "김철수", "박영희"]);
-  const [name, setName] = useState("");
+  const [Names, setNames] = useState(['홍길동', '김철수', '박영희']);
+  const [name, setName] = useState('');
 
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   // 🛸 State.
@@ -47,32 +47,32 @@ const UseStateExamPage = () => {
   // 공통 함수: 이름 추가 로직 (중복 체크 포함)
   const addNameToList = () => {
     const trimmedName = name.trim();
-    if (trimmedName === "") {
+    if (trimmedName === '') {
       return;
     }
 
     if (Names.includes(trimmedName)) {
       notification.warning({
-        message: "중복된 이름",
+        message: '중복된 이름',
         description: `'${trimmedName}'은(는) 이미 목록에 있습니다.`,
-        placement: "topLeft",
+        placement: 'topLeft',
         duration: 1,
       });
       return;
     }
-
     setNames((prevName) => [...prevName, trimmedName]);
-    setName("");
+    setName('');
   };
 
   const handlerAddName = (e) => {
     // Enter 키 또는 클릭 이벤트 모두 처리
-    if (e.type === "keyup" && e.key !== "Enter") return;
+    if (e.type === 'keyup' && e.key !== 'Enter') return;
     addNameToList();
   };
 
   const handlerClickClear = () => {
     setNames([]);
+    setName('');
   };
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   // 🛸 Name List handler.
