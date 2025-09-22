@@ -24,6 +24,15 @@ const ExamsIndexPage = () => {
       color: '#52c41a',
       topics: ['상태 관리', '이벤트 핸들링', '조건부 렌더링', '배열 상태', '객체 상태'],
     },
+    {
+      key: 'useCallback',
+      title: 'useCallback',
+      description: '',
+      path: '/exams/useCallback',
+      icon: <ApiOutlined />,
+      color: '#52c41a',
+      topics: ['주제는 여기에...'],
+    },
   ];
 
   const handleExamClick = (path) => {

@@ -28,6 +28,7 @@ import UseNavigatePage from '../pages/hooks/useNavigate';
 import URLSearchParamsPage from '../pages/hooks/URLSearchParams';
 import ExamsIndexPage from '../pages/exams/index';
 import UseStateExamPage from '../pages/exams/useState';
+import UseCallbackExamPage from '../pages/exams/useCallback';
 
 const { Header, Content, Footer } = Layout;
 const { Title } = Typography;
@@ -142,6 +143,7 @@ const AppRouters = () => {
           <Route path="/hooks/URLSearchParams" element={<URLSearchParamsPage />} />
           <Route path="/exams" element={<ExamsIndexPage />} />
           <Route path="/exams/useState" element={<UseStateExamPage />} />
+          <Route path="/exams/useCallback" element={<UseCallbackExamPage />} />
           <Route path="/about" element={<AboutPage />} />
         </Routes>
       </AppLayout>

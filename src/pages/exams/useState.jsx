@@ -67,10 +67,10 @@ const UseStateExamPage = () => {
       });
       return;
     }
-  setNames((prevName) => [...prevName, trimmedName]);
-  form.resetFields(['name']);
-  // Enter/제출 후 입력창 포커스 유지
-  setTimeout(() => inputRef.current?.focus?.(), 0);
+    setNames((prevName) => [...prevName, trimmedName]);
+    form.resetFields(['name']);
+    // Enter/제출 후 입력창 포커스 유지
+    setTimeout(() => inputRef.current?.focus?.(), 0);
   };
 
   const handlerClickClear = () => {
