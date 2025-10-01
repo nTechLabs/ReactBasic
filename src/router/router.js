@@ -1,15 +1,15 @@
-import { createBrowserRouter } from 'react-router-dom'
-import Layout from './Layout'
-import HomePage from '../pages/counter/HomePage'
-import TodosPage from '../pages/todos/TodosPage'
-import AboutPage from '../pages/about/AboutPage'
-import HooksIndexPage from '../pages/hooks/index.jsx'
-import UseStatePage from '../pages/hooks/useState.jsx'
-import UseEffectPage from '../pages/hooks/useEffect.jsx'
-import UseContextPage from '../pages/hooks/useContext.jsx'
-import UseCallbackPage from '../pages/hooks/useCallback.jsx'
-import UseParamsPage from '../pages/hooks/useParams.jsx'
-import URLSearchParamsPage from '../pages/hooks/URLSearchParams.jsx'
+import { createBrowserRouter } from 'react-router-dom';
+import Layout from './Layout';
+import HomePage from '../pages/counter/HomePage';
+import TodosPage from '../pages/todos/TodosPage';
+import AboutPage from '../pages/about/AboutPage';
+import HooksIndexPage from '../pages/hooks/index.jsx';
+import UseStatePage from '../pages/hooks/useState.jsx';
+import UseEffectPage from '../pages/hooks/useEffect.jsx';
+import UseContextPage from '../pages/hooks/useContext.jsx';
+import UseCallbackPage from '../pages/hooks/useCallback.jsx';
+import UseParamsPage from '../pages/hooks/useParams.jsx';
+import URLSearchParamsPage from '../pages/hooks/URLSearchParams.jsx';
 
 export const router = createBrowserRouter([
   {
@@ -18,60 +18,60 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <HomePage />
+        element: <HomePage />,
       },
       {
         path: 'todos',
-        element: <TodosPage />
+        element: <TodosPage />,
       },
       {
         path: 'about',
-        element: <AboutPage />
+        element: <AboutPage />,
       },
       {
         path: 'hooks',
-        element: <HooksIndexPage />
+        element: <HooksIndexPage />,
       },
       {
         path: 'hooks/useState',
-        element: <UseStatePage />
+        element: <UseStatePage />,
       },
       {
         path: 'hooks/useEffect',
-        element: <UseEffectPage />
+        element: <UseEffectPage />,
       },
       {
         path: 'hooks/useContext',
-        element: <UseContextPage />
+        element: <UseContextPage />,
       },
       {
         path: 'hooks/useCallback',
-        element: <UseCallbackPage />
+        element: <UseCallbackPage />,
       },
       {
         path: 'hooks/useParams',
-        element: <UseParamsPage />
+        element: <UseParamsPage />,
       },
       {
         path: 'hooks/url-search-params',
-        element: <URLSearchParamsPage />
+        element: <URLSearchParamsPage />,
       },
       {
         path: 'hooks/URLSearchParams', // alias
-        element: <URLSearchParamsPage />
+        element: <URLSearchParamsPage />,
       },
       {
         path: 'hooks/useParams/user/:id/:name',
-        element: <UseParamsPage />
+        element: <UseParamsPage />,
       },
       {
         path: 'hooks/useParams/shop/:category',
-        element: <UseParamsPage />
+        element: <UseParamsPage />,
       },
       {
         path: 'hooks/useParams/shop/:category/product/:productId',
-        element: <UseParamsPage />
-      }
-    ]
-  }
-])
+        element: <UseParamsPage />,
+      },
+    ],
+  },
+]);

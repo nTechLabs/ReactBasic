@@ -1,17 +1,28 @@
-import { Layout, Typography, Card, Button, List, Space, Spin, Alert, Avatar, Statistic } from 'antd'
-import { MinusOutlined, PlusOutlined, ReloadOutlined, RocketOutlined } from '@ant-design/icons'
-import useCounterStore from './store/counterStore'
-import { useTodos } from './customHooks/useTodos'
+import {
+  Layout,
+  Typography,
+  Card,
+  Button,
+  List,
+  Space,
+  Spin,
+  Alert,
+  Avatar,
+  Statistic,
+} from 'antd';
+import { MinusOutlined, PlusOutlined, ReloadOutlined, RocketOutlined } from '@ant-design/icons';
+import useCounterStore from './store/counterStore';
+import { useTodos } from './customHooks/useTodos';
 
-const { Header, Content, Footer } = Layout
-const { Title, Paragraph } = Typography
+const { Header, Content, Footer } = Layout;
+const { Title, Paragraph } = Typography;
 
 function App() {
   // Zustand store 사용
-  const { count, increment, decrement, reset } = useCounterStore()
-  
+  const { count, increment, decrement, reset } = useCounterStore();
+
   // React Query 사용
-  const { data: todos, isLoading, error } = useTodos()
+  const { data: todos, isLoading, error } = useTodos();
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
@@ -20,42 +31,27 @@ function App() {
           <RocketOutlined /> Vite + React + Ant Design + React Query + Zustand
         </Title>
       </Header>
-      
+
       <Content style={{ padding: '24px', maxWidth: '1200px', margin: '0 auto', width: '100%' }}>
         <Space direction="vertical" size="large" style={{ width: '100%' }}>
-          
           {/* Zustand Counter */}
           <Card title="Zustand Counter" style={{ textAlign: 'center' }}>
             <Space size="large" align="center">
-              <Button 
-                type="primary" 
-                icon={<MinusOutlined />} 
-                onClick={decrement}
-                size="large"
-              >
+              <Button type="primary" icon={<MinusOutlined />} onClick={decrement} size="large">
                 감소
               </Button>
-              
-              <Statistic 
-                title="현재 카운트" 
-                value={count} 
+
+              <Statistic
+                title="현재 카운트"
+                value={count}
                 valueStyle={{ color: '#1890ff', fontSize: '32px' }}
               />
-              
-              <Button 
-                type="primary" 
-                icon={<PlusOutlined />} 
-                onClick={increment}
-                size="large"
-              >
+
+              <Button type="primary" icon={<PlusOutlined />} onClick={increment} size="large">
                 증가
               </Button>
-              
-              <Button 
-                icon={<ReloadOutlined />} 
-                onClick={reset}
-                size="large"
-              >
+
+              <Button icon={<ReloadOutlined />} onClick={reset} size="large">
                 리셋
               </Button>
             </Space>
@@ -69,30 +65,29 @@ function App() {
                 <Paragraph style={{ marginTop: '16px' }}>할 일 목록을 불러오는 중...</Paragraph>
               </div>
             )}
-            
+
             {error && (
-              <Alert
-                message="오류 발생"
-                description={error.message}
-                type="error"
-                showIcon
-              />
+              <Alert message="오류 발생" description={error.message} type="error" showIcon />
             )}
-            
+
             {todos && (
               <List
                 dataSource={todos}
                 renderItem={(todo) => (
                   <List.Item>
                     <List.Item.Meta
-                      avatar={<Avatar style={{ backgroundColor: todo.completed ? '#52c41a' : '#1890ff' }}>
-                        {todo.id}
-                      </Avatar>}
+                      avatar={
+                        <Avatar style={{ backgroundColor: todo.completed ? '#52c41a' : '#1890ff' }}>
+                          {todo.id}
+                        </Avatar>
+                      }
                       title={
-                        <span style={{ 
-                          textDecoration: todo.completed ? 'line-through' : 'none',
-                          color: todo.completed ? '#999' : '#000'
-                        }}>
+                        <span
+                          style={{
+                            textDecoration: todo.completed ? 'line-through' : 'none',
+                            color: todo.completed ? '#999' : '#000',
+                          }}
+                        >
                           {todo.title}
                         </span>
                       }
@@ -103,7 +98,6 @@ function App() {
               />
             )}
           </Card>
-
         </Space>
       </Content>
 
@@ -113,7 +107,7 @@ function App() {
         </Paragraph>
       </Footer>
     </Layout>
-  )
+  );
 }
 
-export default App
+export default App;

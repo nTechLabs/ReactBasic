@@ -1,15 +1,15 @@
-import { Card, List, Spin, Alert, Avatar, Typography, Space } from 'antd'
-import { useTodos } from '../../customHooks/useTodos'
+import { Card, List, Spin, Alert, Avatar, Typography, Space } from 'antd';
+import { useTodos } from '../../customHooks/useTodos';
 
-const { Title } = Typography
+const { Title } = Typography;
 
 const TodosPage = () => {
-  const { data: todos, isLoading, error } = useTodos()
+  const { data: todos, isLoading, error } = useTodos();
 
   return (
     <Space direction="vertical" size="large" style={{ width: '100%' }}>
       <Title level={2}>할 일 목록</Title>
-      
+
       <Card title="React Query Todos" style={{ textAlign: 'center' }}>
         {isLoading && (
           <div style={{ padding: '50px' }}>
@@ -19,16 +19,9 @@ const TodosPage = () => {
             </Typography.Paragraph>
           </div>
         )}
-        
-        {error && (
-          <Alert
-            message="오류 발생"
-            description={error.message}
-            type="error"
-            showIcon
-          />
-        )}
-        
+
+        {error && <Alert message="오류 발생" description={error.message} type="error" showIcon />}
+
         {todos && (
           <List
             dataSource={todos}
@@ -36,17 +29,21 @@ const TodosPage = () => {
               <List.Item>
                 <List.Item.Meta
                   avatar={
-                    <Avatar style={{ 
-                      backgroundColor: todo.completed ? '#52c41a' : '#1890ff' 
-                    }}>
+                    <Avatar
+                      style={{
+                        backgroundColor: todo.completed ? '#52c41a' : '#1890ff',
+                      }}
+                    >
                       {todo.id}
                     </Avatar>
                   }
                   title={
-                    <span style={{ 
-                      textDecoration: todo.completed ? 'line-through' : 'none',
-                      color: todo.completed ? '#999' : '#000'
-                    }}>
+                    <span
+                      style={{
+                        textDecoration: todo.completed ? 'line-through' : 'none',
+                        color: todo.completed ? '#999' : '#000',
+                      }}
+                    >
                       {todo.title}
                     </span>
                   }
@@ -58,7 +55,7 @@ const TodosPage = () => {
         )}
       </Card>
     </Space>
-  )
-}
+  );
+};
 
-export default TodosPage
+export default TodosPage;

@@ -5,6 +5,7 @@
 This is a React Vite project using JSX (not TypeScript). The project includes:
 
 ## Libraries and Tools
+
 - **React 19.1.0** - Using JSX syntax
 - **Vite** - Build tool and development server
 - **TanStack React Query (v5)** - For server state management and data fetching
@@ -13,6 +14,7 @@ This is a React Vite project using JSX (not TypeScript). The project includes:
 - **React Router DOM** - Client-side routing
 
 ## Project Guidelines
+
 - Use JSX syntax (not TypeScript)
 - Use functional components with hooks
 - Implement React Query for API calls and server state
@@ -23,6 +25,7 @@ This is a React Vite project using JSX (not TypeScript). The project includes:
 - Use ES6+ features and modern JavaScript syntax
 
 ## Code Style
+
 - Use arrow functions for components
 - Prefer named exports over default exports
 - Use destructuring for props and state
@@ -30,6 +33,7 @@ This is a React Vite project using JSX (not TypeScript). The project includes:
 - Use custom hooks for reusable logic
 
 ## Ant Design Guidelines
+
 - Import specific components from 'antd' (e.g., Button, Card, Layout)
 - Import icons from '@ant-design/icons'
 - Use Ant Design's Layout, Space, and Grid system for layouts
