@@ -4,7 +4,7 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .game-header {
@@ -197,22 +197,22 @@
   .tic-tac-toe-container {
     padding: 15px;
   }
-  
+
   .game-content {
     flex-direction: column;
     gap: 20px;
   }
-  
+
   .game-sidebar {
     width: 100%;
   }
-  
+
   .game-cell {
     width: 80px;
     height: 80px;
     font-size: 28px;
   }
-  
+
   .game-board {
     gap: 3px;
     padding: 6px;
@@ -225,12 +225,12 @@
     height: 70px;
     font-size: 24px;
   }
-  
+
   .game-controls-card .ant-space {
     flex-direction: column;
     width: 100%;
   }
-  
+
   .game-controls-card .ant-btn {
     width: 100%;
   }
@@ -273,7 +273,8 @@
 }
 
 @keyframes celebration {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
   }
   25% {
