@@ -32,6 +32,23 @@ const ExamsIndexPage = () => {
         "객체 상태",
       ],
     },
+    {
+      key: "zustand",
+      title: "Zustand 튜토리얼",
+      description:
+        "Zustand를 사용한 틱택토 게임으로 전역 상태 관리를 학습합니다",
+      path: "/exams/zustand",
+      icon: <ExperimentOutlined />,
+      color: "#722ed1",
+      difficulty: "중급",
+      topics: [
+        "전역 상태 관리",
+        "Zustand Store",
+        "게임 로직",
+        "상태 업데이트",
+        "액션 처리",
+      ],
+    },
   ];
 
   const handleExamClick = (path) => {

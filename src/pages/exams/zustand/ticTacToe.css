@@ -1,0 +1,288 @@
+/* 🎮 Tic-Tac-Toe 게임 스타일 */
+
+.tic-tac-toe-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.game-header {
+  margin-bottom: 30px;
+}
+
+.game-content {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+}
+
+.game-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+.game-sidebar {
+  width: 300px;
+  min-width: 300px;
+}
+
+/* 🎲 게임 보드 스타일 */
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 4px;
+  background: #2c3e50;
+  padding: 8px;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  margin: 20px 0;
+}
+
+.game-cell {
+  width: 100px;
+  height: 100px;
+  border: none;
+  border-radius: 8px;
+  font-size: 36px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(145deg, #ffffff, #f0f0f0);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.game-cell:hover:not(:disabled) {
+  background: linear-gradient(145deg, #e3f2fd, #bbdefb);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.game-cell:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.game-cell:disabled {
+  cursor: not-allowed;
+}
+
+.game-cell.filled {
+  background: linear-gradient(145deg, #f5f5f5, #e0e0e0);
+}
+
+.game-cell.player-x {
+  color: #2196f3;
+  text-shadow: 0 2px 4px rgba(33, 150, 243, 0.3);
+}
+
+.game-cell.player-o {
+  color: #f44336;
+  text-shadow: 0 2px 4px rgba(244, 67, 54, 0.3);
+}
+
+.game-cell.winning {
+  background: linear-gradient(145deg, #4caf50, #66bb6a) !important;
+  color: white !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* 📊 게임 상태 카드 */
+.game-status-card {
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.game-status-card .ant-card-body {
+  padding: 20px;
+}
+
+.game-stats {
+  background: #f8f9fa;
+  padding: 12px;
+  border-radius: 8px;
+}
+
+/* 🎮 게임 컨트롤 카드 */
+.game-controls-card {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.game-controls-card .ant-card-body {
+  padding: 20px;
+  text-align: center;
+}
+
+.game-controls-card .ant-btn {
+  border-radius: 8px;
+  height: 40px;
+  font-weight: 500;
+}
+
+/* 📜 게임 히스토리 카드 */
+.game-history-card {
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  height: fit-content;
+}
+
+.game-history-card .ant-card-head {
+  border-radius: 12px 12px 0 0;
+}
+
+.history-moves {
+  max-height: 300px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+.history-move {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.history-move:last-child {
+  border-bottom: none;
+}
+
+.history-moves::-webkit-scrollbar {
+  width: 6px;
+}
+
+.history-moves::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.history-moves::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.history-moves::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* 📱 반응형 디자인 */
+@media (max-width: 768px) {
+  .tic-tac-toe-container {
+    padding: 15px;
+  }
+  
+  .game-content {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .game-sidebar {
+    width: 100%;
+  }
+  
+  .game-cell {
+    width: 80px;
+    height: 80px;
+    font-size: 28px;
+  }
+  
+  .game-board {
+    gap: 3px;
+    padding: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  .game-cell {
+    width: 70px;
+    height: 70px;
+    font-size: 24px;
+  }
+  
+  .game-controls-card .ant-space {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .game-controls-card .ant-btn {
+    width: 100%;
+  }
+}
+
+/* 🎨 애니메이션 효과 */
+.game-cell {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.ant-card {
+  animation: slideUp 0.4s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 🏆 승리 효과 */
+.game-status-card .ant-badge-status-success {
+  animation: celebration 2s ease-in-out infinite;
+}
+
+@keyframes celebration {
+  0%, 100% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.1);
+  }
+  50% {
+    transform: scale(1);
+  }
+  75% {
+    transform: scale(1.05);
+  }
+}

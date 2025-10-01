@@ -28,6 +28,7 @@ import UseNavigatePage from "../pages/hooks/useNavigate";
 import URLSearchParamsPage from "../pages/hooks/URLSearchParams";
 import ExamsIndexPage from "../pages/exams/index";
 import UseStateExamPage from "../pages/exams/useState";
+import TicTacToeGame from "../pages/exams/zustand/include";
 
 const { Header, Content, Footer } = Layout;
 const { Title } = Typography;
@@ -157,6 +158,7 @@ const AppRouters = () => {
           />
           <Route path="/exams" element={<ExamsIndexPage />} />
           <Route path="/exams/useState" element={<UseStateExamPage />} />
+          <Route path="/exams/zustand" element={<TicTacToeGame />} />
           <Route path="/about" element={<AboutPage />} />
         </Routes>
       </AppLayout>
