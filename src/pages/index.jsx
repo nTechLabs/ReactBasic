@@ -13,6 +13,7 @@ import {
   DatabaseOutlined,
   GlobalOutlined,
   ShareAltOutlined,
+  NotificationOutlined,
 } from '@ant-design/icons';
 
 const { Title, Paragraph } = Typography;
@@ -28,6 +29,14 @@ const IndexPage = () => {
       path: '/counter',
       icon: <HomeOutlined />,
       color: '#1890ff',
+    },
+    {
+      key: 'fcm',
+      title: 'FCM 알림',
+      description: 'Firebase Cloud Messaging 알림 테스트',
+      path: '/fcm',
+      icon: <NotificationOutlined />,
+      color: '#eb2f96',
     },
     {
       key: 'todos',

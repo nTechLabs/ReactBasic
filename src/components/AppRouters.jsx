@@ -6,11 +6,13 @@ import {
   InfoCircleOutlined,
   RocketOutlined,
   FunctionOutlined,
+  NotificationOutlined,
 } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router-dom';
 import HomePage from '../pages/counter/HomePage';
 import TodosPage from '../pages/todos/TodosPage';
 import AboutPage from '../pages/about/AboutPage';
+import FCMPage from '../pages/fcm/FCMPage';
 import HooksIndexPage from '../pages/hooks/index.jsx';
 import UseStatePage from '../pages/hooks/useState.jsx';
 import UseEffectPage from '../pages/hooks/useEffect.jsx';
@@ -30,6 +32,11 @@ const NavigationMenu = () => {
       key: '/',
       icon: <HomeOutlined />,
       label: '홈',
+    },
+    {
+      key: '/fcm',
+      icon: <NotificationOutlined />,
+      label: 'FCM 알림',
     },
     {
       key: '/todos',
@@ -93,6 +100,7 @@ const AppRouters = () => {
       <AppLayout>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/fcm" element={<FCMPage />} />
           <Route path="/todos" element={<TodosPage />} />
           <Route path="/hooks" element={<HooksIndexPage />} />
           <Route path="/hooks/useState" element={<UseStatePage />} />

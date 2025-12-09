@@ -6,6 +6,7 @@ import {
   InfoCircleOutlined,
   RocketOutlined,
   FunctionOutlined,
+  NotificationOutlined,
 } from '@ant-design/icons';
 
 const { Header, Content, Footer } = AntLayout;
@@ -20,6 +21,11 @@ const Layout = () => {
       key: '/',
       icon: <HomeOutlined />,
       label: '홈',
+    },
+    {
+      key: '/fcm',
+      icon: <NotificationOutlined />,
+      label: 'FCM 알림',
     },
     {
       key: '/todos',

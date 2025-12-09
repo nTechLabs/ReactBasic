@@ -7,12 +7,14 @@ import {
   RocketOutlined,
   DashboardOutlined,
   ApiOutlined,
+  NotificationOutlined,
 } from "@ant-design/icons";
 import { useNavigate, useLocation } from "react-router-dom";
 import IndexPage from "../pages/index";
 import HomePage from "../pages/counter/HomePage";
 import TodosPage from "../pages/todos/TodosPage";
 import AboutPage from "../pages/about/AboutPage";
+import FCMPage from "../pages/fcm/FCMPage";
 import HooksIndexPage from "../pages/hooks/index";
 import UseStatePage from "../pages/hooks/useState";
 import UseEffectPage from "../pages/hooks/useEffect";
@@ -47,6 +49,11 @@ const NavigationMenu = () => {
       key: '/counter',
       icon: <HomeOutlined />,
       label: '카운터',
+    },
+    {
+      key: '/fcm',
+      icon: <NotificationOutlined />,
+      label: 'FCM 알림',
     },
     {
       key: '/todos',
@@ -120,6 +127,7 @@ const AppRouters = () => {
         <Routes>
           <Route path="/" element={<IndexPage />} />
           <Route path="/counter" element={<HomePage />} />
+          <Route path="/fcm" element={<FCMPage />} />
           <Route path="/todos" element={<TodosPage />} />
           <Route path="/hooks" element={<HooksIndexPage />} />
           <Route path="/hooks/useState" element={<UseStatePage />} />

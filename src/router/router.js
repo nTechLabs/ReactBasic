@@ -3,6 +3,7 @@ import Layout from './Layout';
 import HomePage from '../pages/counter/HomePage';
 import TodosPage from '../pages/todos/TodosPage';
 import AboutPage from '../pages/about/AboutPage';
+import FCMPage from '../pages/fcm/FCMPage';
 import HooksIndexPage from '../pages/hooks/index.jsx';
 import UseStatePage from '../pages/hooks/useState.jsx';
 import UseEffectPage from '../pages/hooks/useEffect.jsx';
@@ -23,6 +24,10 @@ export const router = createBrowserRouter([
       {
         path: 'todos',
         element: <TodosPage />,
+      },
+      {
+        path: 'fcm',
+        element: <FCMPage />,
       },
       {
         path: 'about',
