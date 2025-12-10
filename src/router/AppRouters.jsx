@@ -31,6 +31,7 @@ import URLSearchParamsPage from "../pages/hooks/URLSearchParams";
 import ExamsIndexPage from "../pages/exams/index";
 import UseStateExamPage from "../pages/exams/useState";
 import TicTacToeGame from "../pages/exams/zustand/include";
+import { KkoMessageHandler } from '../pages/kko/KkoMessageHandler';
 
 const { Header, Content, Footer } = Layout;
 const { Title } = Typography;
@@ -54,6 +55,11 @@ const NavigationMenu = () => {
       key: '/fcm',
       icon: <NotificationOutlined />,
       label: 'FCM 알림',
+    },
+    {
+      key: '/kko',
+      icon: <NotificationOutlined />,
+      label: 'KKO 테스트',
     },
     {
       key: '/todos',
@@ -123,38 +129,46 @@ const AppLayout = ({ children }) => {
 const AppRouters = () => {
   return (
     <Router>
-      <AppLayout>
-        <Routes>
-          <Route path="/" element={<IndexPage />} />
-          <Route path="/counter" element={<HomePage />} />
-          <Route path="/fcm" element={<FCMPage />} />
-          <Route path="/todos" element={<TodosPage />} />
-          <Route path="/hooks" element={<HooksIndexPage />} />
-          <Route path="/hooks/useState" element={<UseStatePage />} />
-          <Route path="/hooks/useEffect" element={<UseEffectPage />} />
-          <Route path="/hooks/useContext" element={<UseContextPage />} />
-          <Route path="/hooks/useCallback" element={<UseCallbackPage />} />
-          <Route path="/hooks/useMemo" element={<UseMemoPage />} />
-          <Route path="/hooks/useForm" element={<UseFormPage />} />
-          <Route path="/hooks/useRef" element={<UseRefPage />} />
-          <Route path="/hooks/useLocation" element={<UseLocationPage />} />
-          <Route path="/hooks/useLocalStorage" element={<UseLocalStoragePage />} />
-          <Route path="/hooks/useParams" element={<UseParamsPage />} />
-          <Route path="/hooks/useParams/user/:id/:name" element={<UseParamsPage />} />
-          <Route path="/hooks/useParams/shop/:category" element={<UseParamsPage />} />
-          <Route
-            path="/hooks/useParams/shop/:category/product/:productId"
-            element={<UseParamsPage />}
-          />
-          <Route path="/hooks/useNavigate" element={<UseNavigatePage />} />
-          <Route path="/hooks/url-search-params" element={<URLSearchParamsPage />} />
-          <Route path="/hooks/URLSearchParams" element={<URLSearchParamsPage />} />
-          <Route path="/exams" element={<ExamsIndexPage />} />
-          <Route path="/exams/useState" element={<UseStateExamPage />} />
-          <Route path="/exams/zustand" element={<TicTacToeGame />} />
-          <Route path="/about" element={<AboutPage />} />
-        </Routes>
-      </AppLayout>
+      <Routes>
+        {/* Layout 없이 독립적으로 렌더링되는 페이지 */}
+        <Route path="/kko" element={<KkoMessageHandler />} />
+        
+        {/* Layout이 포함된 페이지들 */}
+        <Route path="*" element={
+          <AppLayout>
+            <Routes>
+              <Route path="/" element={<IndexPage />} />
+              <Route path="/counter" element={<HomePage />} />
+              <Route path="/fcm" element={<FCMPage />} />
+              <Route path="/todos" element={<TodosPage />} />
+              <Route path="/hooks" element={<HooksIndexPage />} />
+              <Route path="/hooks/useState" element={<UseStatePage />} />
+              <Route path="/hooks/useEffect" element={<UseEffectPage />} />
+              <Route path="/hooks/useContext" element={<UseContextPage />} />
+              <Route path="/hooks/useCallback" element={<UseCallbackPage />} />
+              <Route path="/hooks/useMemo" element={<UseMemoPage />} />
+              <Route path="/hooks/useForm" element={<UseFormPage />} />
+              <Route path="/hooks/useRef" element={<UseRefPage />} />
+              <Route path="/hooks/useLocation" element={<UseLocationPage />} />
+              <Route path="/hooks/useLocalStorage" element={<UseLocalStoragePage />} />
+              <Route path="/hooks/useParams" element={<UseParamsPage />} />
+              <Route path="/hooks/useParams/user/:id/:name" element={<UseParamsPage />} />
+              <Route path="/hooks/useParams/shop/:category" element={<UseParamsPage />} />
+              <Route
+                path="/hooks/useParams/shop/:category/product/:productId"
+                element={<UseParamsPage />}
+              />
+              <Route path="/hooks/useNavigate" element={<UseNavigatePage />} />
+              <Route path="/hooks/url-search-params" element={<URLSearchParamsPage />} />
+              <Route path="/hooks/URLSearchParams" element={<URLSearchParamsPage />} />
+              <Route path="/exams" element={<ExamsIndexPage />} />
+              <Route path="/exams/useState" element={<UseStateExamPage />} />
+              <Route path="/exams/zustand" element={<TicTacToeGame />} />
+              <Route path="/about" element={<AboutPage />} />
+            </Routes>
+          </AppLayout>
+        } />
+      </Routes>
     </Router>
   );
 };
