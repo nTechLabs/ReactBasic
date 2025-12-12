@@ -582,7 +582,10 @@ const [count, setCount] = useState(0)
 const increment = () => {
   setCount(count + 1)  // 직접 값
   // 또는 (권장)
-  setCount(prev => prev + 1)  // 함수형
+  setCount(prev => prev + 1)  // 함수형 
+
+  state 초기화시 콜백을 사용하면 heavy 연산이 랜더링될 때마다 불리는 것을 피할 수 있다.
+  setState 에서 변경값은 콜백으로 처리해 준다. (prevStat) => { return newState }
 }`}
                         </pre>
                       </div>
