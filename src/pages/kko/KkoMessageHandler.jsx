@@ -3,195 +3,105 @@ import React, { useEffect, useState, useCallback, useRef } from 'react';
 
 /**
  * URL 스킴 호출용 커스텀 훅
- * - devTest=true 이면 어떤 이동도 하지 않고 로그만 남김
+ * - window focus / blur 상태를 감지해서 앱 설치 여부를 유추
  */
-const useUrlSchemeCaller = ({ devTest } = {}) => {
-  console.log('>>>1', devTest);
-  const [windowState, setWindowState] = useState('focus');
+const useUrlSchemeCaller = () => {
   const windowStateRef = useRef('focus');
 
   useEffect(() => {
-    console.log('>>>2');
     const handleFocus = () => {
-      console.log('>>>3');
-      setWindowState('focus');
       windowStateRef.current = 'focus';
     };
     const handleBlur = () => {
-      console.log('>>>4');  
-      setWindowState('blur');
       windowStateRef.current = 'blur';
     };
 
-    console.log('>>>5');
     window.addEventListener('focus', handleFocus);
     window.addEventListener('blur', handleBlur);
 
     return () => {
-      console.log('>>>6');
       window.removeEventListener('focus', handleFocus);
       window.removeEventListener('blur', handleBlur);
     };
   }, []);
 
-  const call = useCallback(
-    (ua, urlScheme, notInstalledCallback) => {
-      console.log('>>>7');
-      // 🔹 PC 테스트 모드: 아무 데도 이동하지 않고 로그만 찍음
-      if (devTest) {
-        console.log('>>>8', devTest);
-        console.log('[DEV TEST][call] ua=', ua);
-        console.log('[DEV TEST][call] try app scheme:', urlScheme);
-        console.log(
-          '[DEV TEST][call] would check focus and maybe call notInstalledCallback later'
-        );
-        console.log('>>>9');
-        return;
-      }
-      console.log('>>>10');
-      // 🔹 실제 모바일 동작: 앱 스킴 호출
-      window.location.href = urlScheme;
+  const call = useCallback((urlScheme, notInstalledCallback) => {
+    // 1️⃣ 앱 스킴 호출
+    window.location.href = urlScheme;
 
-      // 300ms 후 focus 상태로 앱 설치 여부 판단
-      setTimeout(() => {
-        console.log('>>>11');
-        if (windowStateRef.current === 'focus') {
-          // 포커스 그대로 → 앱 미설치로 간주
-          if (typeof notInstalledCallback === 'function') {
-            console.log('>>>12');
-            notInstalledCallback();
-          }
-        } else {
-          console.log('>>>13');
-          // 포커스가 blur → 앱이 열렸다고 보고 딥링크 한 번 더
-          const code = new URLSearchParams(window.location.search).get('code');
-          const deepLink = `msds://detail?code=${code ?? ''}`;
-          window.location.href = deepLink;
+    // 2️⃣ 일정 시간 후 포커스 상태로 앱 설치 여부 판단
+    setTimeout(() => {
+      if (windowStateRef.current === 'focus') {
+        // 앱 미설치로 판단
+        if (typeof notInstalledCallback === 'function') {
+          notInstalledCallback();
         }
-        console.log('>>>14');
-      }, 300);
-    },
-    [devTest]
-  );
+      }
+    }, 300);
+  }, []);
 
-  console.log('>>>15');
-  return { call, windowState };
+  return { call };
 };
 
 const KkoMessageHandler = () => {
-  console.log('>>>16')
   const [userAgent, setUserAgent] = useState('');
-  const [code, setCode] = useState('');
-  const [devTest, setDevTest] = useState(false);
-  const [mockUa, setMockUa] = useState('');
-  console.log('>>>16-1')
-  // 1) 쿼리 파라미터 파싱 (mockUa, devTest, code)
+  const [deeplink, setDeeplink] = useState('');
+
+  // 1️⃣ 진입 시 UA, deeplink 파라미터 파싱
   useEffect(() => {
     try {
-      console.log('>>>17');
       const params = new URLSearchParams(window.location.search);
-      console.log('>>>17-1', params.toString());
-      const mockUaParam = params.get('mockUa'); // android / iphone 등
-      const devTestParam = params.get('devTest'); // '1' 이면 테스트 모드
 
-      setMockUa(mockUaParam ?? '');
-      setDevTest(devTestParam === '1');
+      setUserAgent((navigator.userAgent || '').toLowerCase());
+      setDeeplink(params.get('deeplink') || '');
 
-      const uaSource = (mockUaParam ?? navigator.userAgent ?? '').toLowerCase();
-      setUserAgent(uaSource);
-
-      const codeParam = params.get('code') ?? '';
-      setCode(codeParam);
-      
-      console.log('>>>18', uaSource, codeParam);
+      console.log('[KkoMessageHandler] deeplink =', params.get('deeplink'));
     } catch (e) {
       console.error('[KkoMessageHandler] URL 파싱 중 오류:', e);
     }
   }, []);
 
-  const getQueryParam = (paramName) => {
-    try {
-      console.log('>>>19', paramName);
-      const params = new URLSearchParams(window.location.search);
-      console.log('>>>20', params);
-      return params.get(paramName);
-    } catch (e) {
-      console.error('[KkoMessageHandler] getQueryParam 에러:', e);
-      return null;
-    }
-  };
+  const { call } = useUrlSchemeCaller();
 
-  console.log('>>>16-2');
-  // 2) URL 스킴 호출 훅 (devTest 플래그 전달)
-  const { call } = useUrlSchemeCaller({ devTest });
-
-  // 3) UA / code 준비되면 딥링크 로직 실행
+  // 2️⃣ deeplink 있을 때만 딥링크 실행
   useEffect(() => {
-    console.log('>>>21');
     if (!userAgent) return;
+    if (!deeplink) {
+      console.warn('[KkoMessageHandler] deeplink 파라미터 없음 – 실행 안 함');
+      return;
+    }
 
-    const deepCode = code ?? getQueryParam('code') ?? '';
-    const urlScheme = `msds://detail?code=${deepCode}`;
+    /**
+     * 👉 FCM deeplink → 앱 스킴 변환
+     * 예:
+     * deeplink = http://mbod.skhynix.com/apps/bod-mobile/agenda/197111
+     * →
+     * msds://open?url=ENCODED_URL
+     */
+    const targetScheme = `msds://open?url=${encodeURIComponent(deeplink)}`;
 
-    // 조금 딜레이 줘서 내부 useEffect 등록 후 실행되도록 함
     const timer = setTimeout(() => {
-      console.log('>>>22'); 
-      console.log('[KkoMessageHandler] userAgent =', userAgent);
-      console.log('[KkoMessageHandler] code =', deepCode);
-      console.log('[KkoMessageHandler] devTest =', devTest);
-      console.log('[KkoMessageHandler] mockUa =', mockUa);
-
       if (userAgent.includes('android')) {
-        // ✅ 안드로이드
-        call('android', urlScheme, () => {
-          if (devTest) {
-            console.log('>>>23');
-            console.log(
-              '[DEV TEST] would navigate to store:',
-              'hmpstore://detail?APP_ID=A000SHY147'
-            );
-          } else {
-            console.log('>>>24');
-            window.location.href = 'hmpstore://detail?APP_ID=A000SHY147';
-          }
-          console.log('>>>24-1');
+        call(targetScheme, () => {
+          window.location.href = 'hmpstore://detail?APP_ID=A000SHY147';
         });
       } else if (
-        
         userAgent.includes('iphone') ||
         userAgent.includes('ipad') ||
         userAgent.includes('ipod')
       ) {
-        console.log('>>>25');
-        // ✅ iOS
-        call('iphone', urlScheme, () => {
-          console.log('>>>26');
-          if (devTest) {
-            console.log(
-              '[DEV TEST] would navigate to store:',
-              'I000SHY005://detail?appId=I000SHY019'
-            );
-          } else {
-            console.log('>>>27');
-            window.location.href = 'I000SHY005://detail?appId=I000SHY019';
-          }
+        call(targetScheme, () => {
+          window.location.href = 'I000SHY005://detail?appId=I000SHY019';
         });
       } else {
-        console.log('>>>28');
-        // ✅ PC, 기타 환경
-        if (devTest) {
-          console.log(
-            '[DEV TEST] non-mobile UA. would show alert: SK Hynix App 환경...'
-          );
-        } else {
-          alert('해당 페이지는 SK Hynix App 실행 환경에서만 동작합니다.');
-        }
+        alert('해당 페이지는 SK Hynix App 실행 환경에서만 동작합니다.');
       }
     }, 100);
-    console.log('>>>29');
-    return () => clearTimeout(timer);
-  }, [userAgent, code, devTest, mockUa, call]);
 
+    return () => clearTimeout(timer);
+  }, [userAgent, deeplink, call]);
+
+  // 3️⃣ UI
   return (
     <div>
       <div>
