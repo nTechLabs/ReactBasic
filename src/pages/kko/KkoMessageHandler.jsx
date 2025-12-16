@@ -3,68 +3,127 @@ import React, { useEffect, useState, useCallback, useRef } from 'react';
 
 /**
  * URL 스킴 호출용 커스텀 훅
- * - focus/blur로 앱 설치 여부를 유추
+ * - focus/blur/visibility로 앱 실행 시도 성공(blur) 여부를 추정
  * - mockNav=1이면 실제 이동 대신 콘솔로그만 + 미설치 플로우 강제 재현
  *
  * 제공 API:
- * - openAppOrStore(appScheme, storeScheme)
+ * - openAppOrStore(appScheme, storeScheme, options)
  */
 const useUrlSchemeCaller = ({ mockNav = false } = {}) => {
-  const windowStateRef = useRef('focus');
+  const windowStateRef = useRef('focus'); // 'focus' | 'blur'
+  const lastBlurAtRef = useRef(0);
+  const lastAttemptAtRef = useRef(0);
 
   useEffect(() => {
     const handleFocus = () => {
       windowStateRef.current = 'focus';
+      console.log('[SCHEME] window focus');
     };
     const handleBlur = () => {
       windowStateRef.current = 'blur';
+      lastBlurAtRef.current = Date.now();
+      console.log('[SCHEME] window blur (likely app opened)');
+    };
+    const handleVisibility = () => {
+      console.log('[SCHEME] visibility:', document.visibilityState);
     };
 
     window.addEventListener('focus', handleFocus);
     window.addEventListener('blur', handleBlur);
+    document.addEventListener('visibilitychange', handleVisibility);
 
     return () => {
       window.removeEventListener('focus', handleFocus);
       window.removeEventListener('blur', handleBlur);
+      document.removeEventListener('visibilitychange', handleVisibility);
     };
   }, []);
 
   const navigate = useCallback(
-    (url) => {
+    (url, label = '') => {
       if (!url) return;
       if (mockNav) {
-        console.log('[MOCK NAV] would navigate to:', url);
+        console.log(`[MOCK NAV] ${label}`.trim(), '=>', url);
         return;
       }
+      console.log(`[NAV] ${label}`.trim(), '=>', url);
       window.location.href = url;
     },
     [mockNav]
   );
 
   /**
-   * appScheme 실행 후, focus 변화가 없으면 storeScheme으로 이동
-   * - 실제 환경: focus stays focus => store 이동
-   * - mockNav=1: 항상 미설치로 간주하여 store 이동 로그까지 재현
+   * 앱 스킴을 N회 재시도 후에도 blur가 안 오면 store로 이동
+   *
+   * options:
+   * - retries: 재시도 횟수(기본 2)
+   * - retryDelayMs: 재시도 간격(기본 250ms)
+   * - installCheckMs: 설치여부 판단 시간(기본 350ms)
+   * - onLikelyOpened: blur로 앱이 열린 것으로 추정될 때 콜백
+   * - onGiveUpToStore: store로 최종 이동 직전 콜백
    */
   const openAppOrStore = useCallback(
-    (appScheme, storeScheme) => {
-      // 1) 앱 스킴 호출
-      navigate(appScheme);
+    (appScheme, storeScheme, options = {}) => {
+      const {
+        retries = 2,
+        retryDelayMs = 250,
+        installCheckMs = 350,
+        onLikelyOpened,
+        onGiveUpToStore,
+      } = options;
 
-      setTimeout(() => {
-        if (mockNav) {
-          console.log('[MOCK NAV] assume NOT installed (focus stays focus)');
-          navigate(storeScheme);
-          return;
-        }
+      // mockNav 모드면 플로우를 콘솔로 재현 (항상 미설치로 간주)
+      if (mockNav) {
+        navigate(appScheme, '[TRY APP] (mock)');
+        console.log('[MOCK NAV] assume NOT installed -> go store');
+        navigate(storeScheme, '[GO STORE] (mock)');
+        return;
+      }
 
-        // 2) 실제 환경: 일정 시간 후 포커스 상태로 앱 설치 여부 판단
-        if (windowStateRef.current === 'focus') {
-          navigate(storeScheme);
-        }
-      }, 300);
+      const attempt = (n) => {
+        lastAttemptAtRef.current = Date.now();
+        console.log(`[SCHEME] attempt ${n + 1}/${retries + 1}`);
+
+        // 1) 앱 스킴 호출
+        navigate(appScheme, '[TRY APP]');
+
+        // 2) 일정 시간 후 blur 여부로 "열림" 추정
+        setTimeout(() => {
+          const now = Date.now();
+          const blurredRecently =
+            windowStateRef.current === 'blur' &&
+            now - lastBlurAtRef.current < 2000; // 최근 2초 내 blur면 열린 걸로 추정
+
+          if (blurredRecently) {
+            console.log('[SCHEME] likely opened (blur detected). stop retry.');
+            if (typeof onLikelyOpened === 'function') {
+              onLikelyOpened({
+                attempt: n + 1,
+                lastBlurAt: lastBlurAtRef.current,
+              });
+            }
+            return;
+          }
+
+          // 3) blur가 안 왔으면 재시도 or store
+          if (n < retries) {
+            console.log(
+              `[SCHEME] no blur yet. retry after ${retryDelayMs}ms...`
+            );
+            setTimeout(() => attempt(n + 1), retryDelayMs);
+          } else {
+            console.log('[SCHEME] give up -> go store');
+            if (typeof onGiveUpToStore === 'function') {
+              onGiveUpToStore({ attempts: retries + 1 });
+            }
+            navigate(storeScheme, '[GO STORE]');
+          }
+        }, installCheckMs);
+      };
+
+      attempt(0);
     },
-    [navigate, mockNav]
+    [mockNav, navigate]
   );
 
   return { openAppOrStore };
@@ -84,8 +143,6 @@ const KkoMessageHandler = () => {
       const mockUaParam = (params.get('mockUa') || '').toLowerCase(); // android | iphone | ipad | ipod
       const mockNavParam = params.get('mockNav') === '1';
 
-      // UA 결정: mockUa가 있으면 그것을 우선 사용
-      // - 'android', 'iphone' 같은 키워드만 넣어도 includes 체크가 되도록 함
       const uaSource = mockUaParam
         ? mockUaParam
         : (navigator.userAgent || '').toLowerCase();
@@ -114,8 +171,6 @@ const KkoMessageHandler = () => {
       return;
     }
 
-    // deeplink -> 앱 스킴 변환
-    // 예: msds://open?url=http%3A%2F%2Fmbod....
     const appScheme = `msds://open?url=${encodeURIComponent(deeplink)}`;
 
     const isAndroid = userAgent.includes('android');
@@ -124,16 +179,48 @@ const KkoMessageHandler = () => {
       userAgent.includes('ipad') ||
       userAgent.includes('ipod');
 
-    // 훅 내부 이벤트 등록 시간 확보
     const timer = setTimeout(() => {
       if (isAndroid) {
         const storeScheme = 'hmpstore://detail?APP_ID=A000SHY147';
-        openAppOrStore(appScheme, storeScheme);
+
+        openAppOrStore(appScheme, storeScheme, {
+          retries: 2,          // 총 3회 시도(1 + 2)
+          retryDelayMs: 250,
+          installCheckMs: 350,
+          onLikelyOpened: ({ attempt }) => {
+            console.log(
+              `[KkoMessageHandler] likely opened on attempt ${attempt}. deeplink was:`,
+              deeplink
+            );
+            // ⚠️ 여기서 "화면까지 갔다"를 웹이 확인할 수는 없고,
+            // "앱이 열렸다(blur)" 추정까지만 가능합니다.
+          },
+          onGiveUpToStore: ({ attempts }) => {
+            console.log(
+              `[KkoMessageHandler] no blur after ${attempts} attempts. go store.`
+            );
+          },
+        });
       } else if (isIOS) {
         const storeScheme = 'I000SHY005://detail?appId=I000SHY019';
-        openAppOrStore(appScheme, storeScheme);
+
+        openAppOrStore(appScheme, storeScheme, {
+          retries: 2,
+          retryDelayMs: 250,
+          installCheckMs: 350,
+          onLikelyOpened: ({ attempt }) => {
+            console.log(
+              `[KkoMessageHandler] likely opened on attempt ${attempt}. deeplink was:`,
+              deeplink
+            );
+          },
+          onGiveUpToStore: ({ attempts }) => {
+            console.log(
+              `[KkoMessageHandler] no blur after ${attempts} attempts. go store.`
+            );
+          },
+        });
       } else {
-        // PC에서 mockUa 없이 접근하면 여기로 옴
         alert('해당 페이지는 SK Hynix App 실행 환경에서만 동작합니다.');
       }
     }, 100);
